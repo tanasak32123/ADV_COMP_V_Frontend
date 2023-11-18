@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import Lottery from './components/Lottery'
-import { IRewardLottery, IUser, ResultData, ResultResponse, ResultReward } from '@/Interface/Lottery/Lottery.interface';
+import { IRewardLottery, IUser, ResultData, ResultResponse, ResultReward } from '@/interface/Lottery/lottery.interface';
 import Balance from './components/Balance';
 
 async function logLottery(){

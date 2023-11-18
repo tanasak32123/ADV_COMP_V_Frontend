@@ -1,14 +1,22 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
+import { IRewardLottery } from "@/interface/Lottery/lottery.interface";
+import { getLotteryData } from "@/service/lottery/lottery.service";
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
+import AwardResult from "./components/AwardResult";
 
-export default function Home() {
+async function getLottery() {
+  const data = await getLotteryData();
+  return data;
+}
+
+export default async function Home() {
+  const lottery = await getLottery();
+
   return (
-    <div className="pt-6 px-10">
+    <div className="relative px-10 min-h-[90dvh]">
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="flex items-center justify-center lg:pl-10 pe-0">
+        <div className="flex items-center justify-center lg:pl-10 pe-0 pt-10">
           <div className="text-white">
             <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-4xl">
               Welcome to ชื่อแอปไรสักอย่าง
@@ -22,39 +30,12 @@ export default function Home() {
               Get Start
             </Button>
 
-            <div className="bg-white w-full text-black mt-10 p-7 rounded-[30px]">
-              <div className="w-full flex items-center">
-                <div className="font-bold text-base border-b-2 border-black w-full me-5 py-2">
-                  ผลสลากกินแบ่งรัฐบาล ประจำงวดที่ 1 มกราคม พ.ศ. 2555
-                </div>
-                <Button className="bg-[#7AA6EE] text-white rounded-[20px]">
-                  ตรวจรางวัล
-                </Button>
-              </div>
-              <div className="grid grid-cols-4 mt-6">
-                <div className="flex flex-col">
-                  <div className="font-semibold text-sm">รางวัล 1</div>
-                  <div className="font-bold text-lg">123456</div>
-                </div>
-                <div className="flex flex-col">
-                  <div className="font-semibold text-sm">เลขท้าย 3 ตัว</div>
-                  <div className="font-bold text-lg">123, 456</div>
-                </div>
-                <div className="flex flex-col">
-                  <div className="font-semibold text-sm">เลขหน้า 3 ตัว</div>
-                  <div className="font-bold text-lg">123, 456</div>
-                </div>
-                <div className="flex flex-col">
-                  <div className="font-semibold text-sm">เลขท้าย 2 ตัว</div>
-                  <div className="font-bold text-lg">12</div>
-                </div>
-              </div>
-            </div>
+            <AwardResult lottery={lottery} />
           </div>
         </div>
 
         <div className="flex items-center justify-center pb-16 pt-12">
-          <div className="w-[50%] h-auto bg-[#7AA7EE] lg:p-28 p-20 rounded-full">
+          <div className="w-[50%] bg-[#7AA7EE] lg:p-20 p-14 rounded-full">
             <FaCircleDollarToSlot className="w-full h-auto text-white" />
           </div>
         </div>
