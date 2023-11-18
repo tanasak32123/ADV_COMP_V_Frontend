@@ -7,5 +7,5 @@ import React from "react";
 export default function MetamaskButton() {
   const { connectWallet } = useWeb3Provider();
   
-  return <Button onClick={connectWallet} className="bg-[#36517C] border-white border-[1px] rounded-[40px] h-fit py-1 px-2">Connect</Button>;
+  return <Button onClick={connectWallet} className="bg-[#36517C] border-white border-[1px] rounded-[40px] h-fit py-1 px-2 w-full">Connect</Button>;
 }

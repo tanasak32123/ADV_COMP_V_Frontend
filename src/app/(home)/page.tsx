@@ -14,9 +14,9 @@ export default async function Home() {
   const lottery = await getLottery();
 
   return (
-    <div className="pt-6 px-10">
+    <div className="relative px-10 min-h-[90dvh]">
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="flex items-center justify-center lg:pl-10 pe-0">
+        <div className="flex items-center justify-center lg:pl-10 pe-0 pt-10">
           <div className="text-white">
             <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-4xl">
               Welcome to ชื่อแอปไรสักอย่าง
@@ -35,7 +35,7 @@ export default async function Home() {
         </div>
 
         <div className="flex items-center justify-center pb-16 pt-12">
-          <div className="w-[50%] h-auto bg-[#7AA7EE] lg:p-28 p-20 rounded-full">
+          <div className="w-[50%] bg-[#7AA7EE] lg:p-20 p-14 rounded-full">
             <FaCircleDollarToSlot className="w-full h-auto text-white" />
           </div>
         </div>

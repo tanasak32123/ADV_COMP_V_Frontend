@@ -20,9 +20,9 @@ export default function AccountDropdown() {
 
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger className="bg-[#36517C] border-white border-[1px] rounded-[40px] h-fit py-1 px-2 flex items-center">
-        <div className="truncate max-w-[90px]">{address}</div>
-        {isOpen ? <FaAngleDown /> : <FaAngleUp />}
+      <DropdownMenuTrigger className="bg-[#36517C] border-white border-[1px] rounded-[40px] h-fit py-1 px-2 flex items-center justify-center w-full text-white">
+        <div className="truncate basis-7/8">{address}</div>
+        <div className="basis-1/8">{isOpen ? <FaAngleDown /> : <FaAngleUp />}</div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
