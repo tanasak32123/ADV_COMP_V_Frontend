@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <Collapsible>
-      <div className="flex justify-between p-4 bg-[#36517C] text-white items-center fixed w-full top-0 min-h-[62px] z-50 px-10">
+      <div className="flex justify-between p-4 bg-[#36517C] text-white items-center fixed w-full top-0 min-h-[62px] z-20 px-10">
         <Link href={`/`}>
           <h2 className="scroll-m-20 text-xl font-semibold tracking-tight first:mt-0">
             ชื่ออะไรสักอย่าง
@@ -38,12 +38,12 @@ export default function Navbar() {
           <CollapsibleTrigger>
             <GiHamburgerMenu />
           </CollapsibleTrigger>
-          <CollapsibleContent className="z-50 bg-white absolute w-[100vw] right-[-40px] bottom-[-62px] px-10">
-            Yes. Free to use for personal and commercial projects. No
-            attribution required.
-          </CollapsibleContent>
         </div>
       </div>
+      <CollapsibleContent className="z-50 bg-white w-[100vw] px-10 pt-[62px]">
+        Yes. Free to use for personal and commercial projects. No attribution
+        required.
+      </CollapsibleContent>
     </Collapsible>
   );
 }
