@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { IRewardLottery } from "@/interface/Lottery/lottery.interface";
 import { getLotteryData } from "@/service/lottery/lottery.service";
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";

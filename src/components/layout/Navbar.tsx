@@ -26,7 +26,7 @@ export default function Navbar() {
         <div className="items-center justify-end gap-x-2 text-sm sm:flex hidden">
           <div className="items-center justify-end gap-x-2 hidden sm:flex">
             <Link href="/dashboard">Dashboard</Link>
-            <Link href="#ซื้อสลาก">ซื้อสลาก</Link>
+            <Link href="/lottery/buy">ซื้อสลาก</Link>
             <Link href="#ตรวจสอบสลาก">ตรวจสอบสลาก</Link>
             <div className="border-l-2 border-white h-[20px]"></div>
           </div>
@@ -53,7 +53,7 @@ export default function Navbar() {
           Dashboard
         </Link>
         <hr className="border-white" />
-        <Link href="#ซื้อสลาก" className="text-white">
+        <Link href="/lottery/buy" className="text-white">
           ซื้อสลาก
         </Link>
         <hr className="border-white" />
