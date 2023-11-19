@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-white text-black flex justify-between px-6 py-3 fixed bottom-0 items-center">
+    <div className="w-full bg-white text-black flex justify-between px-6 py-3 fixed bottom-0 items-center border-t border-black">
       <div className="flex items-center gap-x-3">
         <div>contact us:</div>
         <Link href={`#facebook`}>
