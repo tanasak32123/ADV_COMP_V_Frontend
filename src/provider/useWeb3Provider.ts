@@ -38,8 +38,8 @@ const useWeb3Provider = () => {
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("address", accounts[0]);
     } catch (error: unknown) {
-      console.log(error);
-      console.log("Error connecting ...");
+      const message = error && typeof error === 'object' && 'message' in error ? error.message : "Something went wrong";  
+      console.log('Error connect wallet:', message);
     }
   }, [isAuthenticated, setWallet]);
 

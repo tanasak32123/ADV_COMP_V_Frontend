@@ -25,22 +25,22 @@ export default function LotteryList({ lotteries, deleteLottery }: Props) {
   return (
     <>
       <div className="font-bold text-lg">Lottery List</div>
-      <Table>
+      <Table className="text-center">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">หลัก</TableHead>
-            <TableHead>เลข</TableHead>
-            <TableHead>Bet</TableHead>
-            <TableHead className="text-right">ประเภท</TableHead>
-            <TableHead>จำนวน</TableHead>
-            <TableHead>ราคา</TableHead>
+            <TableHead className="text-center">หลัก</TableHead>
+            <TableHead className="text-center">เลข</TableHead>
+            <TableHead className="text-center">Bet</TableHead>
+            <TableHead className="text-center">ประเภท</TableHead>
+            <TableHead className="text-center">จำนวน</TableHead>
+            <TableHead className="text-center">ราคา</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {lotteries.map((lottery, i) => (
             <TableRow key={i}>
-              <TableCell className="font-medium">{lottery.digit}</TableCell>
+              <TableCell className="font-medium">{lottery.digit === 'digit2' ? '2 หลัก' : '3 หลัก'}</TableCell>
               <TableCell>{lottery.number}</TableCell>
               <TableCell>{lottery.bet}</TableCell>
               <TableCell>{lottery.type}</TableCell>
@@ -60,7 +60,7 @@ export default function LotteryList({ lotteries, deleteLottery }: Props) {
         </TableBody>
       </Table>
       {lotteries.length === 0 && (
-        <div className="h-full flex justify-center items-center">
+        <div className="h-[300px] flex justify-center items-center">
           <div className="text-xs text-gray-500">ไม่มีสลาก</div>
         </div>
       )}

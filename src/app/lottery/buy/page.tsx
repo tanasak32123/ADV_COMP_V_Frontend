@@ -40,7 +40,7 @@ export default function BuyLotteryPage() {
             </span>
           </div>
 
-          <div className="bg-[#ECECEC] rounded-[30px] p-4 mt-6">
+          <div className="bg-[#ECECEC] rounded-[30px] py-4 px-2 sm:px-4 mt-6">
             <div className="flex justify-start">
               <ToggleGroup
                 defaultValue={digit}
@@ -52,20 +52,20 @@ export default function BuyLotteryPage() {
                 <ToggleGroupItem
                   value="digit2"
                   aria-label="Toggle 2 digit"
-                  className="rounded-[30px] h-fit w-[120px]"
+                  className="rounded-[30px] h-fit w-[80px]"
                 >
                   2 หลัก
                 </ToggleGroupItem>
                 <ToggleGroupItem
                   value="digit3"
                   aria-label="Toggle 3 digit"
-                  className="rounded-[30px] h-fit w-[120px]"
+                  className="rounded-[30px] h-fit w-[80px]"
                 >
                   3 หลัก
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
-            <div className="p-6">
+            <div className="p-3 sm:p-6">
               <BuyLotteryForm
                 digit={digit}
                 lotteries={lotteries}
@@ -86,8 +86,8 @@ export default function BuyLotteryPage() {
         >
           Cancel
         </Button>
-        <div className="flex gap-x-3 items-center">
-          <div className="text-sm">
+        <div className="flex gap-x-1 items-center">
+          <div className="text-xs sm:text-sm">
              ทั้งหมด <span className="text-green-500 font-bold">{totalPrice().toLocaleString()} ETH</span>
           </div>
           <Button className="bg-[#FF9345] hover:bg-[#ea9151] text-black rounded-[40px]">

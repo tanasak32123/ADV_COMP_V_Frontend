@@ -31,7 +31,7 @@ export default function LotteryAmountInput({ control }: Props) {
               </Button>
               <FormControl>
                 <Input
-                  type="number"
+                  type="text"
                   value={value}
                   className="w-10 text-center px-0"
                   disabled
