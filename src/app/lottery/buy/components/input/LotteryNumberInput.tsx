@@ -18,7 +18,7 @@ export default function LotteryNumberInput({ control, digit }: Props) {
       render={() => (
         <FormItem>
           <div className="flex items-center mb-3">
-            <FormLabel className="me-2">กรุณาระบุเลข:</FormLabel>
+            <FormLabel className="me-2">หมายเลข:</FormLabel>
             <div className="flex gap-x-4">
               <FormField
                 control={control}

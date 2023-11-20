@@ -23,7 +23,7 @@ export default function LotteryTypeInput({ control }: Props) {
       render={({ field: { value } }) => (
         <FormItem>
           <div className="flex items-center mb-3">
-            <FormLabel className="me-2">ระบุประเภท:</FormLabel>
+            <FormLabel className="me-2">ประเภท:</FormLabel>
             <FormControl className="flex">
               <RadioGroup defaultValue={value}>
                 <div className="flex items-center space-x-2">

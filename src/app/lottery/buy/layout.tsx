@@ -5,5 +5,5 @@ export default function BuyTicketLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="bg-white min-h-[90dvh] p-14">{children}</div>;
+  return <div className="bg-white min-h-[100dvh] px-5 py-14 sm:p-14">{children}</div>;
 }

@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="w-full bg-white text-black flex justify-between px-6 py-3 fixed bottom-0 items-center border-t border-black">
+    <div className="w-full bg-white text-black sm:flex justify-between px-6 py-3 hidden fixed bottom-0 items-center border-t border-black">
       <div className="flex items-center gap-x-3">
-        <div>contact us:</div>
+        <div className="text-xs sm:text-sm">contact us:</div>
         <Link href={`#facebook`}>
           <FaFacebook />
         </Link>
@@ -20,7 +20,7 @@ export default function Footer() {
         </Link>
       </div>
 
-      <div className="text-sm">Developed by ธนานาศักดิ์ เกิลเฟรนssssss</div>
+      <div className="text-xs sm:text-sm">Developed by ธนานาศักดิ์ เกิลเฟรนssssss</div>
     </div>
   );
 }

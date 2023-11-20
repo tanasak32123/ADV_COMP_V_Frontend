@@ -78,9 +78,9 @@ export default function BuyLotteryForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-1 sm:grid-cols-5 gap-x-2"
+        className="grid grid-cols-1 sm:grid-cols-5 gap-3"
       >
-        <div className="col-span-3 flex flex-col gap-y-5">
+        <div className="col-span-5 sm:col-span-3 flex flex-col gap-y-5">
           <LotteryNumberInput control={form.control} digit={digit}  />
 
           <LotteryBetInput control={form.control} />
@@ -91,7 +91,7 @@ export default function BuyLotteryForm({
             <LotteryFBInput control={form.control} />
           )}
         </div>
-        <div className="col-span-2 grid content-between">
+        <div className="col-span-5 sm:col-span-2 grid content-between">
           <LotteryAmountInput control={form.control} />
           
           <div className="flex justify-end">
