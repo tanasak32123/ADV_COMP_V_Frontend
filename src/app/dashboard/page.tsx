@@ -10,6 +10,7 @@ import {
 import Lottery from './components/Lottery'
 import { IRewardLottery, IUser, ResultData, ResultResponse, ResultReward } from '@/interface/Lottery/lottery.interface';
 import Balance from './components/Balance';
+import Wallet from './components/Wallet';
 
 async function logLottery(){
     const response = await fetch("https://www.glo.or.th/api/lottery/getLatestLottery",{
@@ -24,8 +25,10 @@ export default async function page() {
     const response = await logLottery() as ResultResponse;
     const reward: IRewardLottery = {
         first: response.response.data.first.number[0].value,
-        last3f: response.response.data.last3f.number[0].value,
-        last3b: response.response.data.last3b.number[0].value,
+        last3f_1: response.response.data.last3f.number[0].value,
+        last3f_2: response.response.data.last3f.number[1].value,
+        last3b_1: response.response.data.last3b.number[0].value,
+        last3b_2: response.response.data.last3b.number[1].value,
         last2: response.response.data.last2.number[0].value,
         day: response.response.displayDate.date,
         month: response.response.displayDate.month,
@@ -39,13 +42,12 @@ export default async function page() {
 
   return (
     <>
-       <div className='flex'>
-            <div className='flex-auto w-1/2 p-10'><Lottery reward={reward}  /></div>
-            <div className='flex-auto w-1/5 p-10'><Balance user={user}/></div>
+       <div className='grid grid-cols-1 lg:grid-cols-3'>
+            <div className='col-span-2 p-10'><Lottery reward={reward} /></div>
+            <div className='p-10'><Balance user={user}/></div>
        </div>
-       <div className='flex'>
-        <div className='w-1/2'>a</div>
-        <div className='w-1/2'>b</div>
+       <div className='grid grid-cols-1'>
+        <div className='px-10 pt-4'><Wallet reward={reward}/></div>
        </div>
     </>
   )
