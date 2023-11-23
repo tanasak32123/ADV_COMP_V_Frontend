@@ -32,8 +32,10 @@ export interface ResultData {
 
 export interface IRewardLottery{
     first: string;
-    last3f: string;
-    last3b: string;
+    last3f_1: string;
+    last3f_2: string;
+    last3b_1: string;
+    last3b_2: string;
     last2: string;
     day: string;
     month: string;
