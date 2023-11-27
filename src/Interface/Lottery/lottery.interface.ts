@@ -48,3 +48,9 @@ export interface IUser{
     balance: number;
 }
 
+export interface IDate{
+    day: string;
+    month: string;
+    year: string;
+}
+
