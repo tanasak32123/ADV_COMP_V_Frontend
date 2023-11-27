@@ -39,7 +39,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { IRewardLottery } from "@/Interface/Lottery/lottery.interface"
+import { IRewardLottery } from "@/interface/Lottery/lottery.interface"
 
 type Props = {
     reward: IRewardLottery;

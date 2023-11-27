@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import { IRewardLottery } from '@/Interface/Lottery/Lottery.interface';
+import { IRewardLottery } from '@/interface/Lottery/lottery.interface';
 
 type Props = {
    reward: IRewardLottery;

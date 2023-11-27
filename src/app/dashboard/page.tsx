@@ -1,28 +1,12 @@
 import React from 'react'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 import Lottery from './components/Lottery'
-import { IRewardLottery, IUser, ResultData, ResultResponse, ResultReward } from '@/interface/Lottery/lottery.interface';
+import { IRewardLottery, IUser, ResultResponse } from '@/interface/Lottery/lottery.interface';
 import Balance from './components/Balance';
 import Wallet from './components/Wallet';
-
-async function logLottery(){
-    const response = await fetch("https://www.glo.or.th/api/lottery/getLatestLottery",{
-        method: "POST"
-    });
-    return response.json()
-}
-
-// type Props = {}
+import apiReward from '@/utils/apiReward';
 
 export default async function page() {
-    const response = await logLottery() as ResultResponse;
+    const response = await apiReward() as ResultResponse;
     const reward: IRewardLottery = {
         first: response.response.data.first.number[0].value,
         last3f_1: response.response.data.last3f.number[0].value,

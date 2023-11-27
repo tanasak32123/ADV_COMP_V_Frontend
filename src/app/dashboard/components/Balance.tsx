@@ -1,5 +1,5 @@
 "use client"
-import { IUser } from '@/Interface/Lottery/Lottery.interface'
+import { IUser } from '@/interface/Lottery/lottery.interface'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useWeb3Store } from '@/state/web3Store'
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function Balance({user}: Props) {
-    const [dealer, setDealer] = useState(true);
+    const [dealer, setDealer] = useState(false);
     const [popupVisible, setPopupVisible] = useState(false);
     const { address } = useWeb3Store();
 
@@ -52,7 +52,16 @@ export default function Balance({user}: Props) {
                         <div className='text-white py-3'>Address:</div>
                         <p className='flex items-center text-white md:truncate pr-2'>{address}</p>
                     </div>
-                    <div className='text-white py-3'>Dealer: {user.dealerAddr}</div>
+                    <div className='grid grid-cols-2'>
+                        <div className='text-white py-3'>Dealer:</div>
+                        {!dealer && (
+                            <p className='flex items-center text-white'>-</p>
+                            )}
+                        {dealer && (
+                            <p className='flex items-center text-white md:truncate pr-2'>0x123123123</p>
+                        )}
+                    </div>
+                    {/* <div className='text-white py-3'>Dealer: {user.dealerAddr}</div> */}
                     <div className='flex flex-row py-3'>
                         <div className='text-lg text-white font-bold'>Balance:</div>
                         <div className='text-center text-white text-3xl font-bold pl-20'>{user.balance} ETH</div>
