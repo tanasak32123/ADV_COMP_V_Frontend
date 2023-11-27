@@ -106,7 +106,7 @@ return (
     <>
         <div className='p-5'>
             <div className='py-3'>My Lottery List</div>
-            <div className="overflow-y-auto h-[600px]">
+            <div className="overflow-y-auto h-[450px]">
                 <Table className="">
                 <TableCaption>A list of your Lottery.</TableCaption>
                 <TableHeader className="sticky top-0">
