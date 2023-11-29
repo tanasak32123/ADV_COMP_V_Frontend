@@ -7,10 +7,11 @@ import BuyLotteryForm from "./components/BuyLotteryForm";
 import LotteryList from "./components/LotteryList";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import withAuth from "@/components/withAuth";
 
 export type LotteryDigit = "digit2" | "digit3";
 
-export default function BuyLotteryPage() {
+const BuyLotteryPage = () => {
   const router = useRouter();
 
   const [lotteries, setLotteries] = React.useState<IBuyLottery[]>([]);
@@ -98,3 +99,5 @@ export default function BuyLotteryPage() {
     </div>
   );
 }
+
+export default withAuth(BuyLotteryPage);

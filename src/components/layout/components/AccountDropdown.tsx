@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useWeb3Provider from "@/provider/useWeb3Provider";
 import { useWeb3Store } from "@/state/web3Store";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { FaAngleUp } from "react-icons/fa";
@@ -15,8 +16,14 @@ import { FaAngleUp } from "react-icons/fa";
 export default function AccountDropdown() {
   const { disconnectWallet } = useWeb3Provider();
   const { address } = useWeb3Store();
+  const router = useRouter();
 
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const onDisconnectedWallet = () => {
+    disconnectWallet();
+    router.replace("/");
+  }
 
   return (
     <DropdownMenu onOpenChange={setIsOpen}>
@@ -29,7 +36,7 @@ export default function AccountDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="text-destructive"
-          onClick={disconnectWallet}
+          onClick={onDisconnectedWallet}
         >
           Log out
         </DropdownMenuItem>
