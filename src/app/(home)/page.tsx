@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { getLotteryData } from "@/service/lottery/lottery.service";
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
 import AwardResult from "./components/AwardResult";
-import { IDate, IRewardLottery, ResultResponse } from "@/interface/Lottery/lottery.interface";
+import { IRewardLottery, ResultResponse } from "@/interface/Lottery/lottery.interface";
 import apiReward from "@/utils/apiReward";
+import GetStartedBtn from "./components/GetStartedBtn";
 
 export default async function Home() {
   const response = await apiReward() as ResultResponse;
@@ -34,9 +33,7 @@ export default async function Home() {
               passages, and more recently with desktop publishing software like
               Aldus PageMaker including versions of Lorem Ipsum.
             </p>
-            <Button className="bg-[#618FD8] font-bold mt-4 rounded-[25px] min-w-[120px]">
-              Get Start
-            </Button>
+            <GetStartedBtn />
 
             <AwardResult reward={reward} />
           </div>

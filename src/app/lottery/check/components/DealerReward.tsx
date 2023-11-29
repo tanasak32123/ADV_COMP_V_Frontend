@@ -1,9 +1,12 @@
+"use client";
+
 import { Button } from '@/components/ui/button'
+import withAuth from '@/components/withAuth'
 import React from 'react'
 
 type Props = {} 
 
-export default function ({}: Props) {
+const Dealer = ({}: Props) => {
   return (
     <>
         <div className='px-10 pt-14 border-2 border-black bg-white h-auto'>
@@ -27,3 +30,5 @@ export default function ({}: Props) {
     </>
   )
 }
+
+export default withAuth(Dealer);

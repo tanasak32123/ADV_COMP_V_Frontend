@@ -5,8 +5,9 @@ import Balance from './components/Balance';
 import Wallet from './components/Wallet';
 import apiReward from '@/utils/apiReward';
 
-export default async function page() {
+const DashboardPage = async () => {
     const response = await apiReward() as ResultResponse;
+
     const reward: IRewardLottery = {
         first: response.response.data.first.number[0].value,
         last3f_1: response.response.data.last3f.number[0].value,
@@ -36,3 +37,5 @@ export default async function page() {
     </>
   )
 }
+
+export default DashboardPage;
