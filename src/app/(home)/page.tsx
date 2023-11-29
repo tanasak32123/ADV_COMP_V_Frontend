@@ -3,14 +3,23 @@ import { getLotteryData } from "@/service/lottery/lottery.service";
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
 import AwardResult from "./components/AwardResult";
-
-async function getLottery() {
-  const data = await getLotteryData();
-  return data;
-}
+import { IDate, IRewardLottery, ResultResponse } from "@/interface/Lottery/lottery.interface";
+import apiReward from "@/utils/apiReward";
 
 export default async function Home() {
-  const lottery = await getLottery();
+  const response = await apiReward() as ResultResponse;
+
+  const reward: IRewardLottery = {
+    first: response.response.data.first.number[0].value,
+    last3f_1: response.response.data.last3f.number[0].value,
+    last3f_2: response.response.data.last3f.number[1].value,
+    last3b_1: response.response.data.last3b.number[0].value,
+    last3b_2: response.response.data.last3b.number[1].value,
+    last2: response.response.data.last2.number[0].value,
+    day: response.response.displayDate.date,
+    month: response.response.displayDate.month,
+    year: response.response.displayDate.year
+  };
 
   return (
     <div className="relative px-10 min-h-[90dvh]">
@@ -29,7 +38,7 @@ export default async function Home() {
               Get Start
             </Button>
 
-            <AwardResult lottery={lottery} />
+            <AwardResult reward={reward} />
           </div>
         </div>
 
