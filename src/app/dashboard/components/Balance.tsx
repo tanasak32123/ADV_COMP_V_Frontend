@@ -1,17 +1,18 @@
 "use client"
+
 import { IUser } from '@/interface/Lottery/lottery.interface'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useWeb3Store } from '@/state/web3Store'
-import { Divide } from 'lucide-react'
 import React, { useState } from 'react'
 import Modal from 'react-modal';
+import withAuth from '@/components/withAuth'
 
 type Props = {
     user: IUser
 }
 
-export default function Balance({user}: Props) {
+const Balance = ({user}: Props) => {
     const [dealer, setDealer] = useState(false);
     const [popupVisible, setPopupVisible] = useState(false);
     const { address } = useWeb3Store();
@@ -77,3 +78,5 @@ export default function Balance({user}: Props) {
         </>
     )
 }
+
+export default withAuth(Balance);
