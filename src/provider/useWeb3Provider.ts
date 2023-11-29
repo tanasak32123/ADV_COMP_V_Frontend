@@ -11,7 +11,13 @@ const useWeb3Provider = () => {
     isAuthenticated,
   } = useWeb3Store();
 
+  const [loading, setLoading] = React.useState(false);
+
   const connectWallet = React.useCallback(async () => {
+    setLoading(true);
+
+    console.log("Connecting wallet ...");
+
     if (isAuthenticated) return;
 
     const ethereum = window.ethereum;
@@ -35,18 +41,19 @@ const useWeb3Provider = () => {
         isAuthenticated: true,
       });
 
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("address", accounts[0]);
     } catch (error: unknown) {
-      const message = error && typeof error === 'object' && 'message' in error ? error.message : "Something went wrong";  
-      console.log('Error connect wallet:', message);
+      const message =
+        error && typeof error === "object" && "message" in error
+          ? error.message
+          : "Something went wrong";
+      console.log("Error connect wallet:", message);
+    } finally {
+      setLoading(false);
     }
   }, [isAuthenticated, setWallet]);
 
   const disconnectWallet = React.useCallback(() => {
     disconnect();
-    localStorage.removeItem("address");
-    localStorage.removeItem("isAuthenticated");
   }, [disconnect]);
 
   React.useEffect(() => {
@@ -75,6 +82,8 @@ const useWeb3Provider = () => {
   return {
     connectWallet,
     disconnectWallet,
+    loading,
+    isAuthenticated,
   };
 };
 

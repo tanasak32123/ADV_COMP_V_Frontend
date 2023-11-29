@@ -26,7 +26,7 @@ export default function LotteryNumberInput({ control, digit }: Props) {
                 render={({ field: { value, onChange } }) => (
                   <FormControl>
                     <Input
-                      value={value}
+                      defaultValue={value}
                       maxLength={1}
                       className="w-10"
                       onKeyDown={(e) =>
@@ -42,7 +42,7 @@ export default function LotteryNumberInput({ control, digit }: Props) {
                 render={({ field: { value, onChange } }) => (
                   <FormControl>
                     <Input
-                      value={value}
+                      defaultValue={value}
                       maxLength={1}
                       className="w-10"
                       onKeyDown={(e) =>
@@ -59,7 +59,7 @@ export default function LotteryNumberInput({ control, digit }: Props) {
                   render={({ field: { value, onChange } }) => (
                     <FormControl>
                       <Input
-                        value={value}
+                        defaultValue={value}
                         maxLength={1}
                         className="w-10"
                         onKeyDown={(e) =>

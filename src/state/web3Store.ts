@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { BrowserProvider, JsonRpcSigner } from "ethers";
-import { devNull } from "os";
+import { persist } from "zustand/middleware";
+
 export interface IWeb3State {
   address: string | null;
   currentChain: number | null;
@@ -9,7 +10,7 @@ export interface IWeb3State {
   isAuthenticated: boolean;
 }
 
-interface IWeb3Action {
+export interface IWeb3Action {
   setWallet: (payload: Partial<IWeb3State>) => void;
   changeAccount: (address: string) => void;
   disconnect: () => void;
@@ -24,24 +25,29 @@ const initialWeb3Value = {
   isAuthenticated: false,
 };
 
-export const useWeb3Store = create<IWeb3State & IWeb3Action>((set, get) => ({
-  address: null,
-  currentChain: null,
-  signer: null,
-  provider: null,
-  isAuthenticated: false,
-  setWallet: (payload: Partial<IWeb3State>) =>
-    set((state) => ({
-      ...state,
-      ...payload,
-    })),
-  changeAccount: (address) =>
-    set(() => ({
-      address,
-    })),
-  changeNetwork: (network) =>
-    set(() => ({
-      currentChain: network,
-    })),
-  disconnect: () => set(() => ({ ...initialWeb3Value })),
-}));
+export type TWeb3Store = IWeb3State & IWeb3Action;
+
+export const useWeb3Store = create<TWeb3Store>()(
+  persist(
+    (set) => ({
+      ...initialWeb3Value,
+      setWallet: (payload: Partial<IWeb3State>) =>
+        set((state) => ({
+          ...state,
+          ...payload,
+        })),
+      changeAccount: (address) =>
+        set(() => ({
+          address,
+        })),
+      changeNetwork: (network) =>
+        set(() => ({
+          currentChain: network,
+        })),
+      disconnect: () => set(() => ({ ...initialWeb3Value })),
+    }),
+    {
+      name: "wallet",
+    }
+  )
+);

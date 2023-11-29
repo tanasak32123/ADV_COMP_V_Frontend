@@ -1,7 +1,5 @@
 import React from "react";
 
-type Props = {};
-
 export default function Loading() {
   // Or a custom loading skeleton component
   return (
