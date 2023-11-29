@@ -58,8 +58,8 @@ const useWeb3Provider = () => {
 
   React.useEffect(() => {
     if (window === null) return;
-    if (localStorage.hasOwnProperty("isAuthenticated")) connectWallet();
-  }, [connectWallet, setWallet]);
+    if (isAuthenticated) connectWallet();
+  }, [connectWallet, isAuthenticated, setWallet]);
 
   React.useEffect(() => {
     if (typeof window.ethereum === "undefined") return;
