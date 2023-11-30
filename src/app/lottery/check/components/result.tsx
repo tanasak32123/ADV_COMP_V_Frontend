@@ -33,10 +33,12 @@ export default function Result({date}: Props) {
                 }
             </div>
             <div className='grid grid-cols-3 pt-14'>
-                <div className='relative col-start-1'>
+                <div className='relative'>
                     <div className='absolute bottom-0 left-0 text-white font-light text-lg'>เงินรางวัลที่ได้:</div>
                 </div>
-                <div className='col-start-2 text-green-300 font-bold text-4xl'>20 ETH</div>
+                <div className='col-span-2'>
+                        <div className='text-green-300 font-bold text-4xl'>20ETH (837,493 BAHT)</div>
+                </div>
             </div>
 
         </div>
