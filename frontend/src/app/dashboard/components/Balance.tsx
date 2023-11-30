@@ -7,6 +7,7 @@ import { useWeb3Store } from '@/state/web3Store'
 import React, { useState } from 'react'
 import Modal from 'react-modal';
 import withAuth from '@/components/withAuth'
+import useLotteryContract from '@/hooks/useLotteryContract'
 
 type Props = {
     user: IUser
@@ -16,6 +17,8 @@ const Balance = ({user}: Props) => {
     const [dealer, setDealer] = useState(false);
     const [popupVisible, setPopupVisible] = useState(false);
     const { address } = useWeb3Store();
+
+    const { getDealer } = useLotteryContract();
 
     let togglePopup = (): void => {
         setPopupVisible(!popupVisible);
@@ -29,6 +32,14 @@ const Balance = ({user}: Props) => {
             borderRadius: '10px'
         },
     };
+
+    React.useEffect(() => {
+        const fetchDealer = async () => {
+            const dealerAddress = await getDealer();
+            console.log(dealerAddress);
+        }
+        fetchDealer();
+    }, [getDealer]);
 
     return (
         <>

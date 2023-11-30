@@ -18,8 +18,6 @@ const useWeb3Provider = () => {
 
     console.log("Connecting wallet ...");
 
-    if (isAuthenticated) return;
-
     const ethereum = window.ethereum;
 
     if (!ethereum) return console.log("Metamask not detected.");
@@ -50,7 +48,7 @@ const useWeb3Provider = () => {
     } finally {
       setLoading(false);
     }
-  }, [isAuthenticated, setWallet]);
+  }, [setWallet]);
 
   const disconnectWallet = React.useCallback(() => {
     disconnect();
