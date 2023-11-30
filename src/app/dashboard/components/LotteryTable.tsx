@@ -124,12 +124,6 @@ return (
         </TableRow>
         ))}
     </TableBody>
-    {/* <TableFooter>
-        <TableRow>
-        <TableCell colSpan={4} className="font-bold">Total</TableCell>
-        <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-    </TableFooter> */}
     </Table>
 )
 }
