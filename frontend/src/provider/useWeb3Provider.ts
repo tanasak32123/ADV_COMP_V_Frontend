@@ -15,13 +15,9 @@ const useWeb3Provider = () => {
 
   const connectWallet = React.useCallback(async () => {
     setLoading(true);
-
     console.log("Connecting wallet ...");
-
     const ethereum = window.ethereum;
-
     if (!ethereum) return console.log("Metamask not detected.");
-
     try {
       const provider = new ethers.BrowserProvider(ethereum);
       const accounts: string[] = await provider.send("eth_requestAccounts", []);

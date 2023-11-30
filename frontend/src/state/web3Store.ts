@@ -37,11 +37,13 @@ export const useWeb3Store = create<TWeb3Store>()(
           ...payload,
         })),
       changeAccount: (address) =>
-        set(() => ({
+        set((state) => ({
+          ...state,
           address,
         })),
       changeNetwork: (network) =>
-        set(() => ({
+        set((state) => ({
+          ...state,
           currentChain: network,
         })),
       disconnect: () => set(() => ({ ...initialWeb3Value })),
