@@ -19,6 +19,15 @@ contract Lottery  {
         ArrangeType arrangeType;
     }
 
+    struct LotteryInput {
+        string baitNumber ;
+        uint256 amount ;
+        uint256 baitValue ; 
+        string digitType ; 
+        string playType ; 
+        string arrangeType;
+    }
+
     struct PersonalData {
         BaitData[] baitsData; 
         uint256 totalReward ;  
@@ -208,18 +217,35 @@ contract Lottery  {
         _transfer(payable(dealer), dealerReward); 
     }
 
-    function buyLottery(string calldata _baitNumber, uint _baitAmount, uint _baitValue, string calldata _playType, string calldata _arrangeType, string calldata digitType) payable external  {
-        require(_baitAmount*_baitValue == msg.value, "invalid value" );
+    function addLottery(
+        string calldata _baitNumber, 
+        uint _baitAmount, 
+        uint _baitValue, 
+        string calldata _playType, 
+        string calldata _arrangeType, 
+        string calldata digitType) payable public  
+    {
+        personalData[msg.sender].baitsData.push(BaitData(_baitNumber, _baitAmount, _baitValue, digitMap[digitType], playMap[_playType], arrangeMap[_arrangeType]));
+        // dealer reward increase
+        dealerReward += (_baitAmount * _baitValue ); 
+        // pay to contract
+    }
+
+    function buyLotteries(LotteryInput[] calldata lotteryInputs) payable public {
+        uint256 totalCost = 0 ; 
+        // cal totalCost 
+        for (uint i = 0 ; i < lotteryInputs.length; i++){
+            totalCost += lotteryInputs[i].amount * lotteryInputs[i].baitValue ; 
+        }
+        require(totalCost == msg.value, "invalid value");
         require(msg.sender != dealer, "dealer cannot do this");
         if (!isElementExists(msg.sender)){
             accounts.push(msg.sender);
             //personalData[msg.sender] = PersonalData( BaitData , 0) ; 
         }
-        personalData[msg.sender].baitsData.push(BaitData(_baitNumber, _baitAmount, _baitValue, digitMap[digitType], playMap[_playType], arrangeMap[_arrangeType]));
-
-        // dealer reward increase
-        dealerReward += (_baitAmount * _baitValue ); 
-        // pay to contract
+        for (uint i = 0 ; i < lotteryInputs.length ; i++){
+            addLottery(lotteryInputs[i].baitNumber, lotteryInputs[i].amount, lotteryInputs[i].baitValue, lotteryInputs[i].playType, lotteryInputs[i].arrangeType, lotteryInputs[i].digitType); 
+        }
         payContract(msg.value);
     }
 
