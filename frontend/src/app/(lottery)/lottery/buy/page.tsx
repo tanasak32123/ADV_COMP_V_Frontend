@@ -1,7 +1,7 @@
 "use client";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { IBuyLottery } from "@/interface/Lottery/buy_lottery.interface";
+import { DIGIT_TYPE, IBuyLottery } from "@/interface/Lottery/buy_lottery.interface";
 import React from "react";
 import BuyLotteryForm from "./components/BuyLotteryForm";
 import LotteryList from "./components/LotteryList";
@@ -9,22 +9,22 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth";
 
-export type LotteryDigit = "digit2" | "digit3";
+export type TLottery = { id: number } & IBuyLottery;
 
 const BuyLotteryPage = () => {
   const router = useRouter();
 
-  const [lotteries, setLotteries] = React.useState<IBuyLottery[]>([]);
-  const [digit, setDigit] = React.useState<LotteryDigit>("digit2");
+  const [lotteries, setLotteries] = React.useState<TLottery[]>([]);
+  const [digit, setDigit] = React.useState<DIGIT_TYPE>(DIGIT_TYPE.TWO);
   const toggleDigitRef = React.useRef<HTMLDivElement | null>(null);
 
-  const handleChangeDigit = (val: LotteryDigit | "") => {
+  const handleChangeDigit = (val: DIGIT_TYPE) => {
     if (!val) return;
     setDigit(val);
   };
 
   const totalPrice = () =>
-    lotteries.reduce((prev, current) => prev + current.price, 0);
+    lotteries.reduce((prev, current) => prev + current.baitAmount * current.baitValue, 0);
 
   const onClickCancelBtn = () => {
     router.push("/dashboard");
@@ -51,14 +51,14 @@ const BuyLotteryPage = () => {
                 className="bg-[#36517C] text-white p-2 rounded-[30px] flex gap-x-3"
               >
                 <ToggleGroupItem
-                  value="digit2"
+                  value={DIGIT_TYPE.TWO}
                   aria-label="Toggle 2 digit"
                   className="rounded-[30px] h-fit w-[80px]"
                 >
                   2 หลัก
                 </ToggleGroupItem>
                 <ToggleGroupItem
-                  value="digit3"
+                  value={DIGIT_TYPE.THREE}
                   aria-label="Toggle 3 digit"
                   className="rounded-[30px] h-fit w-[80px]"
                 >

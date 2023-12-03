@@ -1,20 +1,26 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import React from "react";
 import { Control } from "react-hook-form";
 import { TBuyLotterySchema, numberOnlyRegex } from "../BuyLotteryForm";
-import { LotteryDigit } from "../../page";
+import { DIGIT_TYPE } from "@/interface/Lottery/buy_lottery.interface";
 
 type Props = {
   control: Control<TBuyLotterySchema>;
-  digit: LotteryDigit
+  digit: DIGIT_TYPE;
 };
 
 export default function LotteryNumberInput({ control, digit }: Props) {
   return (
     <FormField
       control={control}
-      name="number"
+      name="baitNumber"
       render={() => (
         <FormItem>
           <div className="flex items-center mb-3">
@@ -22,49 +28,52 @@ export default function LotteryNumberInput({ control, digit }: Props) {
             <div className="flex gap-x-4">
               <FormField
                 control={control}
-                name="number.0"
+                name="baitNumber.0"
                 render={({ field: { value, onChange } }) => (
                   <FormControl>
                     <Input
-                      defaultValue={value}
                       maxLength={1}
+                      value={value}
                       className="w-10"
                       onKeyDown={(e) =>
                         onChange(numberOnlyRegex.test(e.key) ? e.key : "0")
                       }
+                      onChange={(e) => e.preventDefault()}
                     />
                   </FormControl>
                 )}
               />
               <FormField
                 control={control}
-                name="number.1"
+                name="baitNumber.1"
                 render={({ field: { value, onChange } }) => (
                   <FormControl>
                     <Input
-                      defaultValue={value}
+                      value={value}
                       maxLength={1}
                       className="w-10"
                       onKeyDown={(e) =>
                         onChange(numberOnlyRegex.test(e.key) ? e.key : "0")
                       }
+                      onChange={(e) => e.preventDefault()}
                     />
                   </FormControl>
                 )}
               />
-              {digit === "digit3" && (
+              {digit === DIGIT_TYPE.THREE && (
                 <FormField
                   control={control}
-                  name="number.2"
+                  name="baitNumber.2"
                   render={({ field: { value, onChange } }) => (
                     <FormControl>
                       <Input
-                        defaultValue={value}
+                        value={value}
                         maxLength={1}
                         className="w-10"
                         onKeyDown={(e) =>
                           onChange(numberOnlyRegex.test(e.key) ? e.key : "0")
                         }
+                        onChange={(e) => e.preventDefault()}
                       />
                     </FormControl>
                   )}
