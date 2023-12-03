@@ -1,3 +1,4 @@
+import useLotteryContract from "@/hooks/useLotteryContract";
 import { useWeb3Store } from "@/state/web3Store";
 import { ethers } from "ethers";
 import React from "react";
@@ -10,6 +11,8 @@ const useWeb3Provider = () => {
     changeNetwork,
     isAuthenticated,
   } = useWeb3Store();
+
+  const { getDealer } = useLotteryContract();
 
   const [loading, setLoading] = React.useState(false);
 
@@ -27,12 +30,15 @@ const useWeb3Provider = () => {
       const signer = await provider.getSigner();
       const chain = Number(await (await provider.getNetwork()).chainId);
 
+      const dealerAddress = await getDealer();
+
       setWallet({
         address: accounts[0],
         signer,
         currentChain: chain,
         provider,
         isAuthenticated: true,
+        isDealer: dealerAddress === accounts[0],
       });
 
     } catch (error: unknown) {
@@ -44,7 +50,7 @@ const useWeb3Provider = () => {
     } finally {
       setLoading(false);
     }
-  }, [setWallet]);
+  }, [getDealer, setWallet]);
 
   const disconnectWallet = React.useCallback(() => {
     disconnect();

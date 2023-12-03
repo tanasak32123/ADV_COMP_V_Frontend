@@ -12,6 +12,8 @@ import {
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "@/hooks/useStore";
+import Image from "next/image";
+import Logo from '@/app/favicon.ico';
 
 export default function Navbar() {
   const {data: isAuthenticated, loading} = useStore<TWeb3Store, boolean>(useWeb3Store, (state) => state.isAuthenticated);
@@ -19,7 +21,8 @@ export default function Navbar() {
   return (
     <Collapsible className="fixed z-50">
       <div className="flex justify-between p-4 bg-[#36517C] text-white items-center fixed w-full top-0 min-h-[62px] z-20 sm:border-b sm:border-white">
-        <Link href={`/`}>
+        <Link href={`/`} className="flex justify-center items-center gap-x-1">
+          <Image src={Logo} width={30} height={30} alt="Lottery Logo" priority />
           <h2 className="scroll-m-20 text-xl font-semibold tracking-tight first:mt-0">
             ชื่ออะไรสักอย่าง
           </h2>

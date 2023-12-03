@@ -1,9 +1,9 @@
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
-import AwardResult from "./components/AwardResult";
+import AwardResult from "../components/AwardResult";
 import { IRewardLottery, ResultResponse } from "@/interface/Lottery/lottery.interface";
 import apiReward from "@/utils/apiReward";
-import GetStartedBtn from "./components/GetStartedBtn";
+import GetStartedBtn from "../components/GetStartedBtn";
 
 export default async function Home() {
   const response = await apiReward() as ResultResponse;
@@ -21,7 +21,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="relative px-10 min-h-[90dvh]">
+    <div className="relative px-10 min-h-[85dvh] bg-[#36517C]">
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="flex items-center justify-center lg:pl-10 pe-0 pt-10">
           <div className="text-white">

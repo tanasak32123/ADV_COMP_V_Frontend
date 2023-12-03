@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,9 @@ export default function Unauthorized() {
   return (
     <div className="h-[85dvh] flex justify-center items-center">
       <div className="text-center">
-        <div className="text-3xl font-bold text-white mb-3">404 Unauthorized</div>
+        <div className="text-3xl font-bold text-orange-500 mb-3">
+          404 Unauthorized
+        </div>
         <Button onClick={() => router.replace("/")}>Home Page</Button>
       </div>
     </div>

@@ -8,6 +8,7 @@ export interface IWeb3State {
   signer: JsonRpcSigner | null;
   provider: BrowserProvider | null;
   isAuthenticated: boolean;
+  isDealer: boolean;
 }
 
 export interface IWeb3Action {
@@ -23,6 +24,7 @@ const initialWeb3Value = {
   signer: null,
   provider: null,
   isAuthenticated: false,
+  isDealer: false,
 };
 
 export type TWeb3Store = IWeb3State & IWeb3Action;
