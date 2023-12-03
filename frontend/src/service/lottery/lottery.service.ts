@@ -1,4 +1,4 @@
-import { ResultResponse } from "@/interface/Lottery/lottery.interface";
+import { ResultResponse } from "@/interface/lottery/lottery.interface";
 import { fetchJson } from "@/lib/fetch";
 
 export const getLotteryData = () => {

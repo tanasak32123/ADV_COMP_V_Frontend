@@ -3,6 +3,7 @@ import React from "react";
 import { ethers, BrowserProvider, JsonRpcSigner } from "ethers";
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "./useStore";
+import { IBuyLottery } from "@/interface/lottery/buy_lottery.interface";
 
 const CONTRACT_ADDRESS = "0x0680274ad07b3778CF8aD91389F8E6d958a80B1B";
 
@@ -48,11 +49,11 @@ const useLotteryContract = () => {
     }
   }, [signer]);
 
-  const buyLottery = React.useCallback(async (baitNumber: string,  value: number) => {
+  const buyLotteries = React.useCallback(async (lotteries: IBuyLottery,  value: number) => {
     setLoading(true);
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      await contract.buyLottery({ value });
+      await contract.buyLotteries(lotteries, { value });
       return true;
     } catch (err: unknown) {
       const message =
@@ -68,6 +69,7 @@ const useLotteryContract = () => {
   return {
     getDealer,
     addDealer,
+    buyLotteries,
     loading,
   };
 };

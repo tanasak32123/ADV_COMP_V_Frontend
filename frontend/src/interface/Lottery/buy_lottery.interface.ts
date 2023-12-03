@@ -26,7 +26,7 @@ export enum DIGIT_TYPE {
 
 export interface IBuyLottery {
     baitNumber: string;
-    baitAmount: number;
+    amount: number;
     baitValue: number;
     playType: PLAY_TYPE;
     arrangeType: ARRANGE_TYPE;

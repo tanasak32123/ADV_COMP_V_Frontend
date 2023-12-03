@@ -1,6 +1,6 @@
 import React from 'react'
 import Lottery from './components/Lottery'
-import { IRewardLottery, IUser, ResultResponse } from '@/interface/Lottery/lottery.interface';
+import { IRewardLottery, IUser, ResultResponse } from '@/interface/lottery/lottery.interface';
 import Balance from './components/Balance';
 import Wallet from './components/Wallet';
 import apiReward from '@/utils/apiReward';

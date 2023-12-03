@@ -1,7 +1,7 @@
 "use client";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { DIGIT_TYPE, IBuyLottery } from "@/interface/Lottery/buy_lottery.interface";
+import { DIGIT_TYPE, IBuyLottery } from "@/interface/lottery/buy_lottery.interface";
 import React from "react";
 import BuyLotteryForm from "./components/BuyLotteryForm";
 import LotteryList from "./components/LotteryList";
@@ -24,7 +24,7 @@ const BuyLotteryPage = () => {
   };
 
   const totalPrice = () =>
-    lotteries.reduce((prev, current) => prev + current.baitAmount * current.baitValue, 0);
+    lotteries.reduce((prev, current) => prev + current.amount * current.baitValue, 0);
 
   const onClickCancelBtn = () => {
     router.push("/dashboard");

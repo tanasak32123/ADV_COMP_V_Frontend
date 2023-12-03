@@ -1,5 +1,5 @@
 "use client";
-import { IRewardLottery } from '@/interface/Lottery/lottery.interface';
+import { IRewardLottery } from '@/interface/lottery/lottery.interface';
 import React from 'react'
 
 type Props = {

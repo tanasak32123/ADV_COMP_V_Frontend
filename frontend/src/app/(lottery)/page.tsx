@@ -1,7 +1,7 @@
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
 import AwardResult from "../components/AwardResult";
-import { IRewardLottery, ResultResponse } from "@/interface/Lottery/lottery.interface";
+import { IRewardLottery, ResultResponse } from "@/interface/lottery/lottery.interface";
 import apiReward from "@/utils/apiReward";
 import GetStartedBtn from "../components/GetStartedBtn";
 

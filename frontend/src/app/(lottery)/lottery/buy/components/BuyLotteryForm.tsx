@@ -8,7 +8,7 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { ARRANGE_TYPE, DIGIT_TYPE, IBuyLottery, PLAY_TYPE } from "@/interface/Lottery/buy_lottery.interface";
+import { ARRANGE_TYPE, DIGIT_TYPE, IBuyLottery, PLAY_TYPE } from "@/interface/lottery/buy_lottery.interface";
 import LotteryNumberInput from "./input/LotteryNumberInput";
 import LotteryBetInput from "./input/LotteryBetInput";
 import LotteryTypeInput from "./input/LotteryTypeInput";
@@ -20,7 +20,7 @@ const formSchema = z.object({
   baitNumber: z.array(z.string()).max(3).min(2),
   baitValue: z.coerce.number().min(1),
   arrangeType: z.nativeEnum(ARRANGE_TYPE),
-  baitAmount: z.coerce.number().min(1),
+  amount: z.coerce.number().min(1),
   playType: z.nativeEnum(PLAY_TYPE),
 });
 
@@ -38,7 +38,7 @@ const defaultValues = {
   baitNumber: ["0", "0", "0"],
   baitValue: 1,
   arrangeType: ARRANGE_TYPE.TOD,
-  baitAmount: 1,
+  amount: 1,
   playType: PLAY_TYPE.FRONT,
 }
 
@@ -65,7 +65,7 @@ export default function BuyLotteryForm({
         digitType: digit,
         baitValue: values.baitValue,
         playType: values.playType,
-        baitAmount: values.baitAmount,
+        amount: values.amount,
         arrangeType: values.arrangeType,
       },
     ]);

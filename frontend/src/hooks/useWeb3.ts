@@ -3,7 +3,7 @@ import { useWeb3Store } from "@/state/web3Store";
 import { ethers } from "ethers";
 import React from "react";
 
-const useWeb3Provider = () => {
+const useWeb3 = () => {
   const {
     setWallet,
     disconnect,
@@ -88,4 +88,4 @@ const useWeb3Provider = () => {
   };
 };
 
-export default useWeb3Provider;
+export default useWeb3;

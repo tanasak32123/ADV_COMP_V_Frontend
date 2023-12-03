@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import useStore from "@/hooks/useStore";
-import useWeb3Provider from "@/provider/useWeb3Provider";
+import useWeb3 from "@/hooks/useWeb3";
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -12,7 +12,7 @@ export default function GetStartedBtn() {
     useWeb3Store,
     (state) => state.isAuthenticated
   );
-  const { connectWallet } = useWeb3Provider();
+  const { connectWallet } = useWeb3();
   const router = useRouter();
 
   const clickGetStartedBtn = async () => {

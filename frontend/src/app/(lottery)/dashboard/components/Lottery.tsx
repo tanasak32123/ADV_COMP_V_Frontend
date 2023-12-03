@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import { IRewardLottery } from '@/interface/Lottery/lottery.interface';
+import { IRewardLottery } from '@/interface/lottery/lottery.interface';
 import { useRouter } from "next/navigation";
 
 type Props = {

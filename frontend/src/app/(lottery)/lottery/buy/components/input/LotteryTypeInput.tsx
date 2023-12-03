@@ -10,7 +10,7 @@ import {
 import { Control } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { ARRANGE_TYPE } from "@/interface/Lottery/buy_lottery.interface";
+import { ARRANGE_TYPE } from "@/interface/lottery/buy_lottery.interface";
 
 type Props = {
   control: Control<TBuyLotterySchema>;

@@ -2,7 +2,7 @@ import React from 'react'
 import Result from './components/result'
 import LotteryReward from './components/LotteryReward'
 import apiReward from '@/utils/apiReward'
-import { IDate, IRewardLottery, ResultResponse } from '@/interface/Lottery/lottery.interface'
+import { IDate, IRewardLottery, ResultResponse } from '@/interface/lottery/lottery.interface'
 import { MyLottery } from './components/MyLottery'
 import DealerReward from './components/DealerReward'
 
