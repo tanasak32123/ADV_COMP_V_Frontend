@@ -2,12 +2,12 @@ import ABI from "@/data/abi/Lottery.json";
 import React from "react";
 import { ethers, BrowserProvider } from "ethers";
 
-const CONTRACT_ADDRESS = "0x0aa4134C8c47d31434B4A87419cb60fa63fBAbFA";
+const CONTRACT_ADDRESS = "0xBcd3c91e1A6fC29Fa2a0aDF3Ec64aad3DAcB7aB9";
 
 const useLotteryContract = () => {
   const [loading, setLoading] = React.useState(false);
 
-  const getDealer = async () => {
+  const getDealer = React.useCallback(async () => {
     setLoading(true);
     const { ethereum } = window;
     if (!ethereum) return;
@@ -25,7 +25,7 @@ const useLotteryContract = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return {
     getDealer,
