@@ -39,6 +39,7 @@ const useWeb3Provider = () => {
         provider,
         isAuthenticated: true,
         isDealer: dealerAddress === accounts[0],
+        // hasDealer: dealerAddress !== '0x0000000000000000000000000000000000000000',
       });
 
     } catch (error: unknown) {

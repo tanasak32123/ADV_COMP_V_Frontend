@@ -18,7 +18,7 @@ export default function LotteryBetInput({ control }: Props) {
   return (
     <FormField
       control={control}
-      name="bet"
+      name="baitValue"
       render={({ field: { value, onChange } }) => (
         <FormItem>
           <div className="flex items-center mb-3">

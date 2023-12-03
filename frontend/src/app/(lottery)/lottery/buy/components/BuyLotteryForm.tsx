@@ -8,35 +8,39 @@ import {
   Form,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { IBuyLottery } from "@/interface/Lottery/buy_lottery.interface";
+import { ARRANGE_TYPE, DIGIT_TYPE, IBuyLottery, PLAY_TYPE } from "@/interface/Lottery/buy_lottery.interface";
 import LotteryNumberInput from "./input/LotteryNumberInput";
-import { LotteryDigit } from "../page";
 import LotteryBetInput from "./input/LotteryBetInput";
 import LotteryTypeInput from "./input/LotteryTypeInput";
 import LotteryFBInput from "./input/LotteryFBInput";
 import LotteryAmountInput from "./input/LotteryAmountInput";
+import { TLottery } from "../page";
 
 const formSchema = z.object({
-  number: z.array(z.string()).max(3).min(2),
-  bet: z.coerce.number().min(1),
-  type: z.string().refine((val) => val === "โต๊ด" || val === "เต๊ง", {
-    message: "Invalid type value",
-  }),
-  amount: z.coerce.number().min(1),
-  side: z.string().refine((val) => val === "หน้า" || val === "หลัง", {
-    message: "Invalid type value",
-  }),
+  baitNumber: z.array(z.string()).max(3).min(2),
+  baitValue: z.coerce.number().min(1),
+  arrangeType: z.nativeEnum(ARRANGE_TYPE),
+  baitAmount: z.coerce.number().min(1),
+  playType: z.nativeEnum(PLAY_TYPE),
 });
 
 type Props = {
-  digit: LotteryDigit;
-  lotteries: IBuyLottery[];
-  addLottery: React.Dispatch<React.SetStateAction<IBuyLottery[]>>;
+  digit: DIGIT_TYPE;
+  lotteries: TLottery[];
+  addLottery: React.Dispatch<React.SetStateAction<TLottery[]>>;
 };
 
 export type TBuyLotterySchema = z.infer<typeof formSchema>;
 
 export const numberOnlyRegex = /^[0-9\b]+$/;
+
+const defaultValues = {
+  baitNumber: ["0", "0", "0"],
+  baitValue: 1,
+  arrangeType: ARRANGE_TYPE.TOD,
+  baitAmount: 1,
+  playType: PLAY_TYPE.FRONT,
+}
 
 export default function BuyLotteryForm({
   digit,
@@ -45,13 +49,7 @@ export default function BuyLotteryForm({
 }: Props) {
   const form = useForm<TBuyLotterySchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      number: ["0", "0", "0"],
-      bet: 1,
-      type: "โต๊ด",
-      amount: 1,
-      side: "หน้า",
-    },
+    defaultValues: defaultValues,
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -63,15 +61,15 @@ export default function BuyLotteryForm({
       ...prev,
       {
         id: maxId + 1,
-        number: digit === 'digit3' ? values.number.join("") : values.number.slice(0,2).join(""),
-        digit,
-        bet: values.bet,
-        type: values.type,
-        amount: values.amount,
-        price: values.bet * values.amount,
+        baitNumber: digit === DIGIT_TYPE.THREE ? values.baitNumber.join("") : values.baitNumber.slice(0,2).join(""),
+        digitType: digit,
+        baitValue: values.baitValue,
+        playType: values.playType,
+        baitAmount: values.baitAmount,
+        arrangeType: values.arrangeType,
       },
     ]);
-    form.reset();
+    form.reset(defaultValues);
   }
 
   return (
@@ -87,7 +85,7 @@ export default function BuyLotteryForm({
 
           <LotteryTypeInput control={form.control} />
 
-          {digit === "digit3" && (
+          {digit === DIGIT_TYPE.THREE && (
             <LotteryFBInput control={form.control} />
           )}
         </div>

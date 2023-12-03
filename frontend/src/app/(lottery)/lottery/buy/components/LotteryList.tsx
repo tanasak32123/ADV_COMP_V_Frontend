@@ -9,12 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { IBuyLottery } from "@/interface/Lottery/buy_lottery.interface";
+import { DIGIT_TYPE } from "@/interface/Lottery/buy_lottery.interface";
 import { Button } from "@/components/ui/button";
+import { TLottery } from "../page";
 
 type Props = {
-  lotteries: IBuyLottery[];
-  deleteLottery: React.Dispatch<React.SetStateAction<IBuyLottery[]>>;
+  lotteries: TLottery[];
+  deleteLottery: React.Dispatch<React.SetStateAction<TLottery[]>>;
 };
 
 export default function LotteryList({ lotteries, deleteLottery }: Props) {
@@ -32,6 +33,7 @@ export default function LotteryList({ lotteries, deleteLottery }: Props) {
             <TableHead className="text-center">เลข</TableHead>
             <TableHead className="text-center">Bet</TableHead>
             <TableHead className="text-center">ประเภท</TableHead>
+            <TableHead className="text-center whitespace-nowrap">รูปแบบ</TableHead>
             <TableHead className="text-center">จำนวน</TableHead>
             <TableHead className="text-center">ราคา</TableHead>
             <TableHead></TableHead>
@@ -40,12 +42,13 @@ export default function LotteryList({ lotteries, deleteLottery }: Props) {
         <TableBody>
           {lotteries.map((lottery, i) => (
             <TableRow key={i}>
-              <TableCell className="font-medium">{lottery.digit === 'digit2' ? '2 หลัก' : '3 หลัก'}</TableCell>
-              <TableCell>{lottery.number}</TableCell>
-              <TableCell>{lottery.bet}</TableCell>
-              <TableCell>{lottery.type}</TableCell>
-              <TableCell>{lottery.amount}</TableCell>
-              <TableCell>{lottery.price}</TableCell>
+              <TableCell className="font-medium">{lottery.digitType === DIGIT_TYPE.TWO ? '2 หลัก' : '3 หลัก'}</TableCell>
+              <TableCell>{lottery.baitNumber}</TableCell>
+              <TableCell>{lottery.baitValue}</TableCell>
+              <TableCell>{lottery.arrangeType === 'Tod' ? 'โต๊ด' : 'เต็ง'}</TableCell>
+              <TableCell>{lottery.digitType === DIGIT_TYPE.TWO ? '-' : lottery.playType === 'Front' ? 'หน้า' : 'หลัง'}</TableCell>
+              <TableCell>{lottery.baitAmount}</TableCell>
+              <TableCell>{lottery.baitValue * lottery.baitAmount}</TableCell>
               <TableCell>
                 <Button
                   variant={`ghost`}
