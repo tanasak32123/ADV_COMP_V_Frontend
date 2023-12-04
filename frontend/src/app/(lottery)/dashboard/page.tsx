@@ -32,7 +32,7 @@ const DashboardPage = async () => {
             <div className='p-10'><Balance user={user}/></div>
        </div>
        <div className='grid grid-cols-1'>
-        <div className='px-10 pt-4'><Wallet reward={reward}/></div>
+        <div className='px-10 pt-4'><Wallet/></div>
        </div>
     </>
   )

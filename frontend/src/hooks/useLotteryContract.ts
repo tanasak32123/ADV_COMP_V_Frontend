@@ -82,12 +82,33 @@ const useLotteryContract = () => {
     }
   }, [signer]); 
 
+  const myLotteries = React.useCallback(async () => {
+    setLoading(true);
+    const { ethereum } = window;
+    if (!ethereum) return;
+    try{
+      const provider = new BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      const lotteries = await contract.getInformation();
+      return lotteries.baitsData;
+    }catch (err:unknown){
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+    }finally{
+      setLoading(false);
+    }
+  },[])
+
   return {
     getDealer,
     addDealer,
     buyLotteries,
     chooseDealer,
     loading,
+    myLotteries,
   };
 };
 
