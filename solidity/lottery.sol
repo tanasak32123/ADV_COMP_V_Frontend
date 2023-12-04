@@ -36,7 +36,7 @@ contract Lottery  {
     address owner;
     address dealer; 
 
-    uint256 stakeAmount = 50000000000000000000;
+    uint256 stakeAmount = 50;
     uint256 private seed;
     uint256 private dealerReward = 0; 
 
@@ -76,22 +76,23 @@ contract Lottery  {
 
     function resetValue() public  {
         dealerReward = 0 ;
+        dealer = address(0);
         // delete all value in dealer
-        for (uint i = 0 ; i < dealers.length; i++){
-            delete dealers[i] ;
+        while(dealers.length > 0 ){
+            dealers.pop();
         }
         
         // delete all personal data 
         for (uint i = 0 ; i < accounts.length; i++){
-            for (uint j = 0 ; j < personalData[accounts[i]].baitsData.length ; j++){
-                delete personalData[accounts[i]].baitsData[j]; 
+            while(personalData[accounts[i]].baitsData.length > 0){
+                personalData[accounts[i]].baitsData.pop();
             }
             personalData[accounts[i]].totalReward = 0 ;
         }
 
         // delete all element 
-        for (uint i = 0 ; i < accounts.length; i++){
-            delete accounts[i];
+        while(accounts.length > 0){
+            accounts.pop();
         }
     }
 
@@ -232,7 +233,7 @@ contract Lottery  {
     }
 
     function buyLotteries(LotteryInput[] calldata lotteryInputs) payable public {
-        uint256 totalCost = 0 ; 
+        uint256 totalCost = 0 ;
         // cal totalCost 
         for (uint i = 0 ; i < lotteryInputs.length; i++){
             totalCost += lotteryInputs[i].amount * lotteryInputs[i].baitValue ; 
