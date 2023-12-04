@@ -1,25 +1,31 @@
 import React from 'react';
 import useLotteryContract from './useLotteryContract';
+import useStore from './useStore';
+import { TWeb3Store, useWeb3Store } from '@/state/web3Store';
 
 const useDealer = () => {
-    const [dealer, setDealer] = React.useState("");
+    const [dealer, setDealer] = React.useState<string>();
     const [isDealer, setIsDealer] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     const { getDealer } = useLotteryContract();
 
-    React.useEffect(() => {
-        const fetchDealer = async () => {
-            const dealerAddress = await getDealer();
-            console.log(dealerAddress);
-            if (dealerAddress != undefined && dealerAddress != '0x0000000000000000000000000000000000000000'){
-                setDealer(dealerAddress);
-                setIsDealer(true);
-            }
-        }
-        fetchDealer();
-    }, [getDealer]);
+    const { data: address } = useStore<TWeb3Store, string>(useWeb3Store, (state) => state.address);
 
-    return { dealer, isDealer }
+    const fetchDealer = React.useCallback(async () => {
+        const dealerAddress = await getDealer();
+        if (!dealerAddress) return;
+        setDealer(dealerAddress);
+        setIsDealer(dealerAddress === address);
+    }, [address, getDealer]);
+
+    React.useEffect(() => {
+        fetchDealer().then(() => {
+            setLoading(false);
+        });
+    }, [fetchDealer]);
+
+    return { dealer, isDealer, loading }
 }
 
 export default useDealer;
