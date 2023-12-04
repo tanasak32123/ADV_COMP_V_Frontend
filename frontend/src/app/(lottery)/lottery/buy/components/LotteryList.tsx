@@ -42,7 +42,7 @@ export default function LotteryList({ lotteries, deleteLottery }: Props) {
         <TableBody>
           {lotteries.map((lottery, i) => (
             <TableRow key={i}>
-              <TableCell className="font-medium">{lottery.digitType === DIGIT_TYPE.TWO ? '2 หลัก' : '3 หลัก'}</TableCell>
+              <TableCell className="font-medium">{lottery.digitType === DIGIT_TYPE.TWO ? 'สอง' : 'สาม'}</TableCell>
               <TableCell>{lottery.baitNumber}</TableCell>
               <TableCell>{lottery.baitValue}</TableCell>
               <TableCell>{lottery.arrangeType === 'Tod' ? 'โต๊ด' : 'เต็ง'}</TableCell>

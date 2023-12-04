@@ -3,7 +3,6 @@ import React from "react";
 import { ethers, BrowserProvider, JsonRpcSigner } from "ethers";
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "./useStore";
-import { IBuyLottery } from "@/interface/lottery/buy_lottery.interface";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
@@ -36,6 +35,7 @@ const useLotteryContract = () => {
     setLoading(true);
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      
       await contract.addDealer({ value: 50 });
       return true;
     } catch (err: unknown) {
@@ -49,18 +49,19 @@ const useLotteryContract = () => {
     }
   }, [signer]);
 
-  const buyLotteries = React.useCallback(async (lotteries: IBuyLottery,  value: number) => {
+  const buyLotteries = React.useCallback(async (data: any[][],  value: number) => {
+    console.log(data);
     setLoading(true);
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      await contract.buyLotteries(lotteries, { value });
-      return true;
+      await contract.buyLotteries(data, {value, gasLimit: 3000000});
+      // await t.wait();
     } catch (err: unknown) {
       const message =
         (err && typeof err === "object" && "message" in err && err.message) ||
         "Something went wrong!";
       console.log(message);
-      return false;
+      throw err;
     } finally {
       setLoading(false);
     }
