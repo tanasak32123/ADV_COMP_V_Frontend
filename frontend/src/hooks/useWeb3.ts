@@ -1,6 +1,5 @@
 import useLotteryContract from "@/hooks/useLotteryContract";
 import { useWeb3Store } from "@/state/web3Store";
-import { error } from "console";
 import { ethers } from "ethers";
 import React from "react";
 
@@ -11,8 +10,6 @@ const useWeb3 = () => {
     changeAccount,
     changeNetwork,
     isAuthenticated,
-    provider,
-    address,
   } = useWeb3Store();
 
   const { getDealer } = useLotteryContract();
@@ -41,7 +38,7 @@ const useWeb3 = () => {
         currentChain: chain,
         provider,
         isAuthenticated: true,
-        isDealer: dealerAddress === accounts[0],
+        // isDealer: dealerAddress === accounts[0],
         // hasDealer: dealerAddress !== '0x0000000000000000000000000000000000000000',
       });
 
