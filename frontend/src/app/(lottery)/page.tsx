@@ -1,9 +1,10 @@
 import React from "react";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
-import AwardResult from "../components/AwardResult";
+import AwardResult from "./components/AwardResult";
 import { IRewardLottery, ResultResponse } from "@/interface/lottery/lottery.interface";
 import apiReward from "@/utils/apiReward";
-import GetStartedBtn from "../components/GetStartedBtn";
+import GetStartedBtn from "./components/GetStartedBtn";
+import AnnouncementDealerDialog from "./components/dialog/AnnouncementDealerDialog";
 
 export default async function Home() {
   const response = await apiReward() as ResultResponse;
@@ -45,6 +46,8 @@ export default async function Home() {
           </div>
         </div>
       </div>
+
+      <AnnouncementDealerDialog />
     </div>
   );
 }

@@ -55,7 +55,22 @@ const useLotteryContract = () => {
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
       await contract.buyLotteries(data, {value, gasLimit: 3000000});
-      // await t.wait();
+    } catch (err: unknown) {
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [signer]);
+
+  const chooseDealer = React.useCallback(async () => {
+    setLoading(true);
+    try {
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      await contract.chooseDealer();
     } catch (err: unknown) {
       const message =
         (err && typeof err === "object" && "message" in err && err.message) ||
@@ -91,6 +106,7 @@ const useLotteryContract = () => {
     getDealer,
     addDealer,
     buyLotteries,
+    chooseDealer,
     loading,
     myLotteries,
   };
