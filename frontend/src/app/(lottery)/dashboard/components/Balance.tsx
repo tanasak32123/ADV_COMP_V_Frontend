@@ -9,19 +9,26 @@ import withAuth from '@/components/withAuth'
 import useLotteryContract from '@/hooks/useLotteryContract'
 import { toastSuccess } from '@/lib/toast'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
+import useWeb3 from '@/hooks/useWeb3'
+import useDealer from '@/hooks/useDealer'
+import useBalance from '../hooks/useBalance'
+import { ethers } from 'ethers';
 
 type Props = {
     user: IUser
 }
 
 const Balance = ({user}: Props) => {
-    const [dealer, setDealer] = useState(false);
     const [popupVisible, setPopupVisible] = useState(false);
     const { address } = useWeb3Store();
 
-    const { addDealer } = useLotteryContract(); 
+    const { addDealer } = useLotteryContract();
 
-    const { getDealer } = useLotteryContract();
+    const { dealer, isDealer } = useDealer();
+
+    const { balance } = useBalance();
+
+    const ETH_Balance = React.useMemo(() => Number(ethers.formatEther(balance.toString())).toFixed(4), [balance]);
 
     let toggleApplyBtn = async () => {
         // setPopupVisible(!popupVisible);
@@ -30,14 +37,6 @@ const Balance = ({user}: Props) => {
             toastSuccess("You has been added as a dealer.");
         }
     }
-
-    React.useEffect(() => {
-        const fetchDealer = async () => {
-            const dealerAddress = await getDealer();
-            console.log(dealerAddress);
-        }
-        fetchDealer();
-    }, [getDealer]);
 
     return (
         <>
@@ -63,19 +62,18 @@ const Balance = ({user}: Props) => {
                     </div>
                     <div className='grid grid-cols-2'>
                         <div className='text-white py-3'>Dealer:</div>
-                        {!dealer && (
-                            <p className='flex items-center text-white'>-</p>
+                        {!isDealer && (
+                            <p className='flex items-center text-white'>ประกาศ dealer วันที่ 5</p>
                             )}
-                        {dealer && (
-                            <p className='flex items-center text-white md:truncate pr-2'>0x123123123</p>
+                        {isDealer && (
+                            <p className='flex items-center text-white md:truncate pr-2'>{dealer}</p>
                         )}
                     </div>
-                    {/* <div className='text-white py-3'>Dealer: {user.dealerAddr}</div> */}
-                    <div className='flex flex-row py-3'>
+                    <div className='grid grid-cols-2 py-3'>
                         <div className='text-lg text-white font-bold'>Balance:</div>
-                        <div className='text-center text-white text-3xl font-bold pl-20'>{user.balance} ETH</div>
+                        <div className=' text-white text-3xl font-bold'>{ETH_Balance} ETH</div>
                     </div>
-                    {!dealer && (
+                    {!isDealer && (
                             <div className='flex flex-row-reverse pt-6'>
                                 <div className=''><Button variant={'apply'} onClick={() => setPopupVisible(true)}>Apply</Button></div>
                                 <div className='flex justify-center items-center text-xs font-light text-white pr-5'>Want to be a Dealer?</div>
