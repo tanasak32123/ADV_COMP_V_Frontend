@@ -5,7 +5,7 @@ import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "./useStore";
 import { IBuyLottery } from "@/interface/lottery/buy_lottery.interface";
 
-const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
 const useLotteryContract = () => {
   const [loading, setLoading] = React.useState(false);
