@@ -1,13 +1,19 @@
 "use client";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { DIGIT_TYPE, IBuyLottery } from "@/interface/lottery/buy_lottery.interface";
+import {
+  DIGIT_TYPE,
+  IBuyLottery,
+  PLAY_TYPE,
+} from "@/interface/lottery/buy_lottery.interface";
 import React from "react";
 import BuyLotteryForm from "./components/BuyLotteryForm";
 import LotteryList from "./components/LotteryList";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth";
+import useLotteryContract from "@/hooks/useLotteryContract";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 export type TLottery = { id: number } & IBuyLottery;
 
@@ -18,17 +24,47 @@ const BuyLotteryPage = () => {
   const [digit, setDigit] = React.useState<DIGIT_TYPE>(DIGIT_TYPE.TWO);
   const toggleDigitRef = React.useRef<HTMLDivElement | null>(null);
 
-  const handleChangeDigit = (val: DIGIT_TYPE) => {
+  const { buyLotteries } = useLotteryContract();
+
+  const handleChangeDigit = React.useCallback((val: DIGIT_TYPE) => {
     if (!val) return;
     setDigit(val);
-  };
+  }, []);
 
-  const totalPrice = () =>
-    lotteries.reduce((prev, current) => prev + current.amount * current.baitValue, 0);
+  const totalPrice = React.useMemo(
+    () =>
+      lotteries.reduce(
+        (prev, current) => prev + current.amount * current.baitValue,
+        0
+      ),
+    [lotteries]
+  );
 
-  const onClickCancelBtn = () => {
-    router.push("/dashboard");
-  };
+  const onClickCancelBtn = React.useCallback(() => {
+    setLotteries([]);
+  }, []);
+
+  const onClickPurchase = React.useCallback(async () => {
+    const data = lotteries.map((lottery) => {
+      const { id: _, ...rest } = lottery;
+      return [
+        rest.baitNumber,
+        rest.amount,
+        rest.baitValue,
+        rest.digitType,
+        rest.digitType === DIGIT_TYPE.TWO ? PLAY_TYPE.ALL : rest.playType,
+        rest.arrangeType,
+      ];
+    });
+
+    try {
+      await buyLotteries(data, totalPrice);
+      toastSuccess("You buy lotteries successfully.");
+      return router.push("/dashboard");
+    } catch {
+      toastError("Something went wrong!");
+    }
+  }, [buyLotteries, lotteries, router, totalPrice]);
 
   return (
     <div className="grid content-between h-full">
@@ -80,24 +116,33 @@ const BuyLotteryPage = () => {
         </div>
       </div>
 
-      <div className="flex justify-between">
-        <Button
-          className="bg-[#F6F6F6] hover:bg-[#e6e5e5] text-black rounded-[40px]"
-          onClick={onClickCancelBtn}
-        >
-          Cancel
-        </Button>
-        <div className="flex gap-x-1 items-center">
-          <div className="text-xs sm:text-sm">
-             ทั้งหมด <span className="text-green-500 font-bold">{totalPrice().toLocaleString()} ETH</span>
-          </div>
-          <Button className="bg-[#FF9345] hover:bg-[#ea9151] text-black rounded-[40px]">
-            Purchase
+      {lotteries.length > 0 && (
+        <div className="flex justify-between">
+          <Button
+            className="bg-[#F6F6F6] hover:bg-[#e6e5e5] text-black rounded-[40px]"
+            onClick={onClickCancelBtn}
+          >
+            Clear
           </Button>
+
+          <div className="flex gap-x-1 items-center">
+            <div className="text-xs sm:text-sm">
+               ทั้งหมด{" "}
+              <span className="text-green-500 font-bold">
+                {totalPrice.toLocaleString()} ETH
+              </span>
+            </div>
+            <Button
+              onClick={onClickPurchase}
+              className="bg-[#FF9345] hover:bg-[#ea9151] text-black rounded-[40px]"
+            >
+              Purchase
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
-}
+};
 
 export default withAuth(BuyLotteryPage);
