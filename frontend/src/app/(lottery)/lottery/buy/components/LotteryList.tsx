@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DIGIT_TYPE } from "@/interface/Lottery/buy_lottery.interface";
+import { DIGIT_TYPE } from "@/interface/lottery/buy_lottery.interface";
 import { Button } from "@/components/ui/button";
 import { TLottery } from "../page";
 
@@ -47,8 +47,8 @@ export default function LotteryList({ lotteries, deleteLottery }: Props) {
               <TableCell>{lottery.baitValue}</TableCell>
               <TableCell>{lottery.arrangeType === 'Tod' ? 'โต๊ด' : 'เต็ง'}</TableCell>
               <TableCell>{lottery.digitType === DIGIT_TYPE.TWO ? '-' : lottery.playType === 'Front' ? 'หน้า' : 'หลัง'}</TableCell>
-              <TableCell>{lottery.baitAmount}</TableCell>
-              <TableCell>{lottery.baitValue * lottery.baitAmount}</TableCell>
+              <TableCell>{lottery.amount}</TableCell>
+              <TableCell>{lottery.baitValue * lottery.amount}</TableCell>
               <TableCell>
                 <Button
                   variant={`ghost`}

@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import useWeb3Provider from "@/provider/useWeb3Provider";
+import useWeb3 from "@/hooks/useWeb3";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function MetamaskButton() {
-  const { connectWallet } = useWeb3Provider();
   const router = useRouter();
+  const { connectWallet } = useWeb3();
 
   const onConnectedWallet = async () => {
     await connectWallet();

@@ -4,7 +4,7 @@ import { Control } from "react-hook-form";
 import { TBuyLotterySchema } from "../BuyLotteryForm";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { PLAY_TYPE } from "@/interface/Lottery/buy_lottery.interface";
+import { PLAY_TYPE } from "@/interface/lottery/buy_lottery.interface";
 
 type Props = {
   control: Control<TBuyLotterySchema>;

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'; 
-import { IDate } from '@/interface/Lottery/lottery.interface';
+import { IDate } from '@/interface/lottery/lottery.interface';
 
 type Props = {
     date: IDate

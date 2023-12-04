@@ -14,7 +14,7 @@ export default function LotteryAmountInput({ control }: Props) {
   return (
     <FormField
       control={control}
-      name="baitAmount"
+      name="amount"
       render={({ field: { value, onChange } }) => (
         <FormItem>
           <div className="flex items-center mb-3 justify-end">

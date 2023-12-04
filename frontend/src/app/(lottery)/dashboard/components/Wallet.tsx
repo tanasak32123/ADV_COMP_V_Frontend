@@ -1,6 +1,6 @@
 import React from 'react'
 import { SearchLottery } from './SearchLottery'
-import { IRewardLottery } from '@/interface/Lottery/lottery.interface';
+import { IRewardLottery } from '@/interface/lottery/lottery.interface';
 import { Button } from '@/components/ui/button';
 import { LotteryTableData } from './LotteryTableData';
 

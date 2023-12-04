@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import useStore from "@/hooks/useStore";
-import { IRewardLottery } from "@/interface/Lottery/lottery.interface";
+import { IRewardLottery } from "@/interface/lottery/lottery.interface";
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import { useRouter } from "next/navigation";
 import React from "react";

@@ -1,6 +1,6 @@
 "use client"
 
-import { IUser } from '@/interface/Lottery/lottery.interface'
+import { IUser } from '@/interface/lottery/lottery.interface'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useWeb3Store } from '@/state/web3Store'

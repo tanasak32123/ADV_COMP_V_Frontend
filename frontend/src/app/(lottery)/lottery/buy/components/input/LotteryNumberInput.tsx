@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { Control } from "react-hook-form";
 import { TBuyLotterySchema, numberOnlyRegex } from "../BuyLotteryForm";
-import { DIGIT_TYPE } from "@/interface/Lottery/buy_lottery.interface";
+import { DIGIT_TYPE } from "@/interface/lottery/buy_lottery.interface";
 
 type Props = {
   control: Control<TBuyLotterySchema>;
