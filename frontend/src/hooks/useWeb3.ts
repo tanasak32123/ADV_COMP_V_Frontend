@@ -1,5 +1,6 @@
 import useLotteryContract from "@/hooks/useLotteryContract";
 import { useWeb3Store } from "@/state/web3Store";
+import { error } from "console";
 import { ethers } from "ethers";
 import React from "react";
 
@@ -10,6 +11,8 @@ const useWeb3 = () => {
     changeAccount,
     changeNetwork,
     isAuthenticated,
+    provider,
+    address,
   } = useWeb3Store();
 
   const { getDealer } = useLotteryContract();
@@ -53,6 +56,25 @@ const useWeb3 = () => {
     }
   }, [getDealer, setWallet]);
 
+  const myBalance = React.useCallback(async () => {
+    setLoading(true);
+    const ethereum = window.ethereum;
+    if (!ethereum) return console.log("Metamask not detected.");
+    try {
+      const provider = new ethers.BrowserProvider(ethereum);
+      const accounts: string[] = await provider.send("eth_requestAccounts", []);
+      const balance = await provider.getBalance(accounts[0]);
+      return balance;
+    } catch (err: unknown) {
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const disconnectWallet = React.useCallback(() => {
     disconnect();
   }, [disconnect]);
@@ -85,6 +107,7 @@ const useWeb3 = () => {
     disconnectWallet,
     loading,
     isAuthenticated,
+    myBalance,
   };
 };
 
