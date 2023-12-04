@@ -7,7 +7,7 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      CONTRACT_ADDRESS: string;
+      NEXT_PUBLIC_CONTRACT_ADDRESS: string;
       NODE_ENV: 'development' | 'production';
     }
   }
