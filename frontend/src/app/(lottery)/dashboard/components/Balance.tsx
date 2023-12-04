@@ -13,6 +13,7 @@ import useWeb3 from '@/hooks/useWeb3'
 import useDealer from '@/hooks/useDealer'
 import useBalance from '../hooks/useBalance'
 import { ethers } from 'ethers';
+import { MyLottery } from '../../lottery/check/components/MyLottery'
 
 type Props = {
     user: IUser
@@ -37,6 +38,7 @@ const Balance = ({user}: Props) => {
             toastSuccess("You has been added as a dealer.");
         }
     }
+
 
     return (
         <>
