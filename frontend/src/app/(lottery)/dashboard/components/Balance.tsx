@@ -33,7 +33,7 @@ const Balance = ({user}: Props) => {
 
     const { dealer, isDealer } = useDealer();
 
-    const { balance } = useBalance();
+    const { balance, loading: balanceLoading} = useBalance();
 
     const ETH_Balance = React.useMemo(() => Number(ethers.formatEther(balance.toString())).toFixed(4), [balance]);
 
@@ -95,7 +95,7 @@ const Balance = ({user}: Props) => {
                     </div>
                     <div className='grid grid-cols-2 py-3'>
                         <div className='text-lg text-white font-bold'>Balance:</div>
-                        <div className=' text-white text-3xl font-bold'>{ETH_Balance} ETH</div>
+                        <div className=' text-white text-3xl font-bold'>{!balanceLoading ? ETH_Balance : 'fetching...'} ETH</div>
                     </div>
                     {!isDealer && (
                             <div className='flex flex-row-reverse pt-6'>

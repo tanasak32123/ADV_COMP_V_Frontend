@@ -17,8 +17,9 @@ export default function AnnouncementDealerDialog() {
   const router = useRouter();
 
   const isAnnouncementDealerDay = React.useMemo(() => {
-    const date = new Date();
-    return date.getMinutes() % 10 === 0;
+    // const date = new Date();
+    // return date.getMinutes() % 10 === 0;
+    return true;
   }, []);
 
   const [open, setOpen] = React.useState(false);

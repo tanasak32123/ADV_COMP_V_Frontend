@@ -44,7 +44,7 @@ const invoices = [
     paymentPrice: "20"
 },
 {
-    id: 3,
+    id: 5,
     paymentLottery: "455",
     paymentBet: "4",
     paymentMethod: "เต๊ง",
@@ -52,7 +52,7 @@ const invoices = [
     paymentPrice: "4"
 },
 {
-    id: 4,
+    id: 6,
     paymentLottery: "12",
     paymentBet: "5",
     paymentMethod: "โต๊ด",
@@ -60,7 +60,7 @@ const invoices = [
     paymentPrice: "20"
 },
 {
-    id: 4,
+    id: 7,
     paymentLottery: "12",
     paymentBet: "5",
     paymentMethod: "โต๊ด",
@@ -68,7 +68,7 @@ const invoices = [
     paymentPrice: "20"
 },
 {
-    id: 4,
+    id: 8,
     paymentLottery: "12",
     paymentBet: "5",
     paymentMethod: "โต๊ด",
@@ -76,7 +76,7 @@ const invoices = [
     paymentPrice: "20"
 },
 {
-    id: 3,
+    id: 9,
     paymentLottery: "455",
     paymentBet: "4",
     paymentMethod: "เต๊ง",
@@ -84,21 +84,13 @@ const invoices = [
     paymentPrice: "4"
 },
 {
-    id: 4,
+    id: 10,
     paymentLottery: "12",
     paymentBet: "5",
     paymentMethod: "โต๊ด",
     paymentAmount: "1",
     paymentPrice: "20"
 },
-{
-    id: 4,
-    paymentLottery: "12",
-    paymentBet: "5",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "1",
-    paymentPrice: "20"
-}
 ]
 
 export function MyLottery() {
