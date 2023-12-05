@@ -15,7 +15,7 @@ const useReward = () => {
     React.useEffect(() => {
         fetchReward();
         setLoading(false);
-    },[])
+    },[fetchReward])
 
     return {reward,loading};
 

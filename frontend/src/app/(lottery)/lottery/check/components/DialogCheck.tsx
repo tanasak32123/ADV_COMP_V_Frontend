@@ -37,15 +37,12 @@ export default function DialogCheck({result}: Props) {
       toastError("Something went wrong!");
       setOpen(false);
     }
-  }, [checkLottery]);
+  }, [checkLottery, result]);
 
-  // React.useEffect(() => {
-  //   setOpen(true);
-  // },[]);
-  const onOpenChange = (value: boolean) => {
+  const onOpenChange = React.useCallback((value: boolean) => {
     setOpen(value);
     if (!value && !localStorage.hasOwnProperty('isCheckRewardisPop')) localStorage.setItem('isCheckRewardisPop', 'true');
-  }
+  }, []);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
