@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import withAuth from "@/components/withAuth";
 import useLotteryContract from "@/hooks/useLotteryContract";
 import { toastError, toastSuccess } from "@/lib/toast";
+import WaitingTransactionDialog from "@/components/dialog/WaitingTransactionDialog";
 
 export type TLottery = { id: number } & IBuyLottery;
 
@@ -59,7 +60,7 @@ const BuyLotteryPage = () => {
 
     try {
       await buyLotteries(data, totalPrice);
-      toastSuccess("You buy lotteries successfully.");
+      toastSuccess("Transaction successfully.");
       return router.push("/dashboard");
     } catch {
       toastError("Transaction was cancelled.");
@@ -141,6 +142,8 @@ const BuyLotteryPage = () => {
           </div>
         </div>
       )}
+
+      <WaitingTransactionDialog open={loading} />
     </div>
   );
 };
