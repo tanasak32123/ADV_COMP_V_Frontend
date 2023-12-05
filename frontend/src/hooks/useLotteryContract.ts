@@ -50,11 +50,11 @@ const useLotteryContract = () => {
   }, [signer]);
 
   const buyLotteries = React.useCallback(async (data: any[][],  value: number) => {
-    console.log(data);
     setLoading(true);
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      await contract.buyLotteries(data, {value, gasLimit: 3000000});
+      const transaction = await contract.buyLotteries(data, {value, gasLimit: 3000000});
+      await transaction.wait();
     } catch (err: unknown) {
       const message =
         (err && typeof err === "object" && "message" in err && err.message) ||
