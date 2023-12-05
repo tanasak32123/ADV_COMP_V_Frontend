@@ -89,8 +89,8 @@ const Balance = ({user}: Props) => {
                     <div className='grid grid-cols-2'>
                         <div className='text-white py-3'>Dealer:</div>
                         { dealer === "0x0000000000000000000000000000000000000000" && (
-                            <p className='flex items-center text-white'>ประกาศ dealer วันที่ 5</p>
-                            )}
+                            <p className='flex items-center text-white'>ประกาศ dealer วันที่ 5/21</p>
+                        )}
                         { (dealer !== "0x0000000000000000000000000000000000000000" && !isDealer) && (
                             <p className='flex items-center text-white md:truncate pr-2'>{dealer}</p>
                         )}
