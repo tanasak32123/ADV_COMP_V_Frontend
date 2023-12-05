@@ -93,8 +93,19 @@ contract Lottery  {
 
     function addDealer() payable external {
         require(msg.value == stakeAmount, "Not enough stake"); 
+        // Is sender in dealers ? 
+        if (isDealerCandidate(msg.sender)) {
+            revert("you are candidate");
+        }
         payContract(msg.value);
         dealers.push(msg.sender);
+    }
+
+    function isDealerCandidate(address player) public view returns(bool){
+        for (uint i = 0 ; i < dealers.length ; i++){
+            if (dealers[i] == player) return true;
+        }
+        return false;
     }
 
     function registerRewardNumber(
