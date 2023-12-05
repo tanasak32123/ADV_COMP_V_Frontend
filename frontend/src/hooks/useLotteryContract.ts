@@ -31,20 +31,21 @@ const useLotteryContract = () => {
     }
   }, []);
 
+
+  // ยังไม่ได้แก้ตอน ปิด transaction 
   const addDealer = React.useCallback(async () => {
-    setLoading(true);
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      
       const transaction = await contract.addDealer({ value: 50 });
+      setLoading(true);
       await transaction.wait();
-      return true;
+      return {result: true, message: "success"};
     } catch (err: unknown) {
       const message =
-        (err && typeof err === "object" && "message" in err && err.message) ||
+        (err && typeof err === "object" && "code" in err && err.code) ||
         "Something went wrong!";
       console.log(message);
-      return false;
+      return {result: false , message};
     } finally {
       setLoading(false);
     }

@@ -7,13 +7,14 @@ import { useWeb3Store } from '@/state/web3Store'
 import React, { useState } from 'react'
 import withAuth from '@/components/withAuth'
 import useLotteryContract from '@/hooks/useLotteryContract'
-import { toastSuccess } from '@/lib/toast'
+import { toastError, toastSuccess } from '@/lib/toast'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import useWeb3 from '@/hooks/useWeb3'
 import useDealer from '@/hooks/useDealer'
 import useBalance from '../hooks/useBalance'
 import { ethers } from 'ethers';
 import { MyLottery } from '../../lottery/check/components/MyLottery'
+import { GiField } from 'react-icons/gi'
 
 type Props = {
     user: IUser
@@ -21,6 +22,7 @@ type Props = {
 
 const Balance = ({user}: Props) => {
     const [popupVisible, setPopupVisible] = useState(false);
+    const [consent, setConsent] = useState(false);
     const { address } = useWeb3Store();
 
     const { addDealer } = useLotteryContract();
@@ -33,26 +35,40 @@ const Balance = ({user}: Props) => {
 
     let toggleApplyBtn = async () => {
         // setPopupVisible(!popupVisible);
-        const result = await addDealer();
-        if (result) {
-            toastSuccess("You has been added as a dealer.");
+        const {result, message} = await addDealer();
+        if (result){
+            toastSuccess("ลงทะเบียน Dealer สำเร็จ");
+        }else{
+            if (message === "CALL_EXCEPTION"){
+                toastError("จำนวน ETH ไม่เพียงพอ");
+            }else{
+                toastSuccess("ยกเลิกการลงทะเบียน");
+            }
         }
     }
+
+    let toggleConsent = () => {
+        setConsent(!consent);
+    }
+
+    console.log(consent);
 
 
     return (
         <>
-            <Dialog open={popupVisible} onOpenChange={() => setPopupVisible(!popupVisible)}>
+            <Dialog open={popupVisible} onOpenChange={() => {setPopupVisible(!popupVisible); setConsent(false)}}>
                 <DialogContent className={`min-w-[35%] min-h-[35%] m-auto rounded-[10px] flex flex-col`}>
                     <div className='flex font-bold text-xl col-start-1 col-span-2 items-center pt-3'>คุณต้องการเป็น Dealer ใช่มั้ย?</div>
                     <div className='p-5 text-sm'>เงื่อนไขสำหรับการเป็น Dealer คุณต้องวางเงินในบัญชีคุณเป็นเงินมัดจำ ตามที่ระบบกำหนด ซึ่งอาจจะต้องเสียเงินมัดจำทั้งหมด ถ้าหากจำนวนเงินที่ถูกรางวัลมีมากกว่า หรือ เท่ากับเงินมัดจำ นอกจากนี้ Dealer ยังไม่สามารถซื้อสลากในงวดนั้นได้</div>
                     <div className='px-3 flex items-center'>
-                        <Checkbox id="term"/>
+                        <Checkbox id="term" onCheckedChange={toggleConsent}/>
                         <label htmlFor="term" className='pl-2 text-sm'>ฉันยอมรับเงื่อนไขที่กำหนด</label>
                     </div>
                     <div className='flex justify-between'>
                         <div className='flex justify-center col-start-2 col-span-2 lg:col-start-4'><Button onClick={() => setPopupVisible(false)} variant={"ghost"}>ยกเลิก</Button></div>
-                        <div className='flex justify-end col-start-6'><Button onClick={toggleApplyBtn} variant={"apply"}>Apply</Button></div>
+                        <div className='flex justify-end col-start-6'>
+                            <Button onClick={toggleApplyBtn} variant={"apply"} disabled={!consent}>Apply</Button>
+                        </div>
                     </div>
                 </DialogContent>
             </Dialog>
