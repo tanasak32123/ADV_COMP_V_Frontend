@@ -12,7 +12,6 @@ import useLottery from "../hooks/useLottery";
     
 export function LotteryTable() {
     const myLottery = useLottery();
-    console.log(myLottery);
 
     return (
         <Table className="">
@@ -24,7 +23,6 @@ export function LotteryTable() {
             <TableHead>Bet</TableHead>
             <TableHead>ประเภท</TableHead>
             <TableHead>จำนวน</TableHead>
-            {/* <TableHead className="text-right">ราคา</TableHead> */}
             </TableRow>
         </TableHeader>
         <TableBody>
@@ -37,7 +35,6 @@ export function LotteryTable() {
                             <TableCell>{lottery.baitValue}</TableCell>
                             <TableCell>{lottery.arrangeType}</TableCell>
                             <TableCell>{lottery.amount}</TableCell>
-                            {/* <TableCell className="text-right">{invoice.paymentPrice}</TableCell> */}
                         </TableRow>
                         ))}
                 </>

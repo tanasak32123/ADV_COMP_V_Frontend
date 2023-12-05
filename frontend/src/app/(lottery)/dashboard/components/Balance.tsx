@@ -16,6 +16,7 @@ import { ethers } from 'ethers';
 import { MyLottery } from '../../lottery/check/components/MyLottery'
 import { GiField } from 'react-icons/gi'
 import WaitingTransactionDialog from '@/components/dialog/WaitingTransactionDialog'
+import useIsDealer from '../hooks/useIsDealer'
 
 type Props = {
     user: IUser
@@ -31,9 +32,11 @@ const Balance = ({user}: Props) => {
 
     const { addDealer, loading } = useLotteryContract();
 
-    const { dealer, isDealer } = useDealer();
+    const { dealer, isDealer, loading: dealer_loading} = useDealer();
 
-    const { balance } = useBalance();
+    const {im: iscandidate,loading: isdealer_loading, fetchimDealer} = useIsDealer();
+
+    const { balance, loading: balanceLoading} = useBalance();
 
     const ETH_Balance = React.useMemo(() => Number(ethers.formatEther(balance.toString())).toFixed(4), [balance]);
 
@@ -42,6 +45,7 @@ const Balance = ({user}: Props) => {
         const {result, message} = await addDealer();
         if (result){
             toastSuccess("ลงทะเบียน Dealer สำเร็จ");
+            await fetchimDealer();
         }else{
             if (message === "CALL_EXCEPTION"){
                 toastError("จำนวน ETH ไม่เพียงพอ");
@@ -56,8 +60,6 @@ const Balance = ({user}: Props) => {
     let toggleConsent = () => {
         setConsent(!consent);
     }
-
-    console.log(consent);
 
     return (
         <>
@@ -86,18 +88,23 @@ const Balance = ({user}: Props) => {
                     </div>
                     <div className='grid grid-cols-2'>
                         <div className='text-white py-3'>Dealer:</div>
-                        {!isDealer && (
+                        { dealer === "0x0000000000000000000000000000000000000000" && (
                             <p className='flex items-center text-white'>ประกาศ dealer วันที่ 5</p>
                             )}
-                        {isDealer && (
+                        { (dealer !== "0x0000000000000000000000000000000000000000" && !isDealer) && (
                             <p className='flex items-center text-white md:truncate pr-2'>{dealer}</p>
                         )}
+                        { (dealer !== "0x0000000000000000000000000000000000000000" && isDealer) && (
+                            <p className='flex items-center text-white md:truncate pr-2'>you are dealer</p>
+                        )
+                        }
                     </div>
                     <div className='grid grid-cols-2 py-3'>
                         <div className='text-lg text-white font-bold'>Balance:</div>
-                        <div className=' text-white text-3xl font-bold'>{ETH_Balance} ETH</div>
+                        <div className=' text-white text-3xl font-bold'>{!balanceLoading ? ETH_Balance : 'fetching...'} ETH</div>
                     </div>
-                    {!isDealer && (
+                    {/* !isDealer ขาด */}
+                    {  (dealer === "0x0000000000000000000000000000000000000000" && !iscandidate) && (
                             <div className='flex flex-row-reverse pt-6'>
                                 <div className=''><Button variant={'apply'} onClick={() => setPopupVisible(true)}>Apply</Button></div>
                                 <div className='flex justify-center items-center text-xs font-light text-white pr-5'>Want to be a Dealer?</div>

@@ -199,7 +199,90 @@
 	},
 	{
 		"inputs": [],
+		"name": "getDealerReward",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getInformation",
+		"outputs": [
+			{
+				"components": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "baitNumber",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "baitValue",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum Lottery.DigitType",
+								"name": "digitType",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum Lottery.PlayType",
+								"name": "playType",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum Lottery.ArrangeType",
+								"name": "arrangeType",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct Lottery.BaitData[]",
+						"name": "baitsData",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalReward",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Lottery.PersonalData",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLastDealerReward",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLastInformation",
 		"outputs": [
 			{
 				"components": [

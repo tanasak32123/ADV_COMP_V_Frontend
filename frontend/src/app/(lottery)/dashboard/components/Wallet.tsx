@@ -1,12 +1,9 @@
 import React from 'react'
 import { SearchLottery } from './SearchLottery'
 import { IRewardLottery } from '@/interface/lottery/lottery.interface';
-import { LotteryTableData } from './LotteryTableData';
+import { Button } from '@/components/ui/button';
 import { LotteryTable } from './LotteryTable';
 
-// type Props = {
-//     reward: IRewardLottery;
-// }
 
 export default function Wallet() {
   return (

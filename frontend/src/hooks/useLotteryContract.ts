@@ -32,7 +32,6 @@ const useLotteryContract = () => {
   }, []);
 
 
-  // ยังไม่ได้แก้ตอน ปิด transaction 
   const addDealer = React.useCallback(async () => {
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
@@ -94,7 +93,6 @@ const useLotteryContract = () => {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
       const lotteries = await contract.getInformation();
-      console.log('lotteries');
       return lotteries.baitsData;
     }catch (err:unknown){
       const message =
@@ -106,7 +104,66 @@ const useLotteryContract = () => {
     }
   },[])
 
+  const myReward = React.useCallback(async () => {
+    setLoading(true);
+    const { ethereum } = window;
+    if (!ethereum) return;
+    try {
+      const provider = new BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      const lotteries = await contract.getInformation();
+      return lotteries.totalReward;
+    } catch (err:unknown) {
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+    }finally{
+      setLoading(false);
+    }
+  },[])
 
+  const imDealer = React.useCallback(async () => {
+    setLoading(true);
+    const ethereum  = window.ethereum;
+    if (!ethereum) return;
+    try {
+      const provider = new BrowserProvider(ethereum);
+      const accounts: string[] = await provider.send("eth_requestAccounts", []);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      const im_dealer = await contract.isDealerCandidate(accounts[0]);
+      return im_dealer
+    } catch (err:unknown) {
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+    }finally {
+      setLoading(false);
+    }
+  },[])
+
+  const myLastLotteries = React.useCallback(async () => {
+    setLoading(true);
+    const { ethereum } = window;
+    if (!ethereum) return;
+    try{
+      const provider = new BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      const lotteries = await contract.getLastInformation();
+      return lotteries.baitsData;
+    }catch (err:unknown){
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+    }finally{
+      setLoading(false);
+    }
+  },[])
 
   return {
     getDealer,
@@ -115,6 +172,9 @@ const useLotteryContract = () => {
     chooseDealer,
     loading,
     myLotteries,
+    myReward,
+    imDealer,
+    myLastLotteries,
   };
 };
 

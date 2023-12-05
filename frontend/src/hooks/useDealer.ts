@@ -14,9 +14,9 @@ const useDealer = () => {
 
     const fetchDealer = React.useCallback(async () => {
         const dealerAddress = await getDealer();
-        if (!dealerAddress) return;
+        if (!dealerAddress || !address) return;
         setDealer(dealerAddress);
-        setIsDealer(dealerAddress === address);
+        setIsDealer(dealerAddress.toLocaleLowerCase() === address.toLocaleLowerCase());
     }, [address, getDealer]);
 
     React.useEffect(() => {
