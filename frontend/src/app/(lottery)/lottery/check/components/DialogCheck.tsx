@@ -16,6 +16,7 @@ import { IRewardLottery } from '@/interface/lottery/lottery.interface'
 import useLotteryContract from '@/hooks/useLotteryContract'
 import { toastError, toastSuccess } from '@/lib/toast'
 import WaitingTransactionDialog from '@/components/dialog/WaitingTransactionDialog';
+import useDealer from '@/hooks/useDealer';
 
 type Props = {
   result: IRewardLottery
@@ -23,6 +24,7 @@ type Props = {
 
 export default function DialogCheck({result}: Props) {
   const { checkLottery, loading } = useLotteryContract();
+  const { dealer } = useDealer();
   const [open, setOpen] = React.useState(false);
 
   const onClickCheckLottery = React.useCallback(async () => {
@@ -37,14 +39,27 @@ export default function DialogCheck({result}: Props) {
     }
   }, [checkLottery]);
 
+  // React.useEffect(() => {
+  //   setOpen(true);
+  // },[]);
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+    if (!value && !localStorage.hasOwnProperty('isCheckDealerIsPop')) localStorage.setItem('isCheckDealerIsPop', 'true');
+  }
+
   React.useEffect(() => {
-    setOpen(true);
-  },[]);
+    const interval = setInterval(() => {
+      const now = new Date();
+      if (now.getMinutes() % 1 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer !== '0x0000000000000000000000000000000000000000'); 
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [dealer, open])
 
   return (
     <>
       <WaitingTransactionDialog open={loading}/>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={val => onOpenChange(val)}>
           <DialogContent>
               <DialogHeader>
               <DialogTitle className="text-center mb-2">

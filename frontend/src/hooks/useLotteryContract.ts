@@ -21,6 +21,7 @@ const useLotteryContract = () => {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
       const dealer = await contract.getDealer() as string;
+      console.log(dealer);
       return dealer;
     } catch (err: unknown) {
       const message =
