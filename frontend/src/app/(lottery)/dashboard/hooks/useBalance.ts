@@ -12,15 +12,14 @@ const useBalance = () => {
         const balance = await myBalance();
         if (!balance) return;
         setBalance(balance);
+        setLoading(false);
     },[myBalance])
     
     React.useEffect(() => {
-        fetchBalance().then(() => {
-        setLoading(false);
-        });
+        fetchBalance();
     },[fetchBalance]);
 
-    return { balance, loading};
+    return { balance, loading,fetchBalance};
 }
 
 export default useBalance;

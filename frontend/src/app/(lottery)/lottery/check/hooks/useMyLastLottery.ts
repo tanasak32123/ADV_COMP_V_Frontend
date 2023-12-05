@@ -11,6 +11,7 @@ const useLastLottery = () => {
     const fetchMyLotteries = React.useCallback(async () => {
         setLoading(false);
         const data = await myLastLotteries();
+        if (!data) return [];
         const last_lottery = data.map((e: any[], i: number) => {
             const playType = Number(e[3]) === 0 ? "-" : Number(e[4]) === 1 ? "หน้า" : "หลัง";
             const arrangeType = Number(e[5]) === 0 ? "โต๊ด" : "เต๊ง";
