@@ -6,12 +6,12 @@ import withAuth from '@/components/withAuth'
 import { useWeb3Store } from '@/state/web3Store';
 import React, { useState } from 'react'
 import Modal from 'react-modal';
+import useDealerReward from '../hooks/useDealerReward';
 
 type Props = {} 
 
 const Dealer = ({}: Props) => {
-
-  const [dealer, setDealer] = useState(false);
+  const {reward,loading} = useDealerReward();
   const [popupVisible, setPopupVisible] = useState(false);
   const { address } = useWeb3Store();
 
@@ -52,10 +52,7 @@ const Dealer = ({}: Props) => {
               <div className='absolute bottom-0 left-0 font-light'>income result:</div>
             </div>
             <div className='relative pt-8'>
-              <div className='absolute bottom-0 right-0 font-bold text-3xl text-green-500'>50 ETH</div>
-            </div>
-            <div className='relative row-start-2 col-span-2'>
-              <div className='absolute right-0 text-green-500 text-3xl font-bold'>(123123 BAHT)</div>
+              <div className='absolute bottom-0 right-0 font-bold text-3xl text-green-500'>{loading ? "loading" : Number(reward) } ETH</div>
             </div>
           </div>
           <div className='grid grid-cols-2 py-5'>
