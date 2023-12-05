@@ -105,6 +105,8 @@ const useLotteryContract = () => {
     }
   },[])
 
+
+
   return {
     getDealer,
     addDealer,

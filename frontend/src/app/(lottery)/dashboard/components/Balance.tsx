@@ -15,17 +15,21 @@ import useBalance from '../hooks/useBalance'
 import { ethers } from 'ethers';
 import { MyLottery } from '../../lottery/check/components/MyLottery'
 import { GiField } from 'react-icons/gi'
+import WaitingTransactionDialog from '@/components/dialog/WaitingTransactionDialog'
 
 type Props = {
     user: IUser
 }
+
+
+
 
 const Balance = ({user}: Props) => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [consent, setConsent] = useState(false);
     const { address } = useWeb3Store();
 
-    const { addDealer } = useLotteryContract();
+    const { addDealer, loading } = useLotteryContract();
 
     const { dealer, isDealer } = useDealer();
 
@@ -42,9 +46,11 @@ const Balance = ({user}: Props) => {
             if (message === "CALL_EXCEPTION"){
                 toastError("จำนวน ETH ไม่เพียงพอ");
             }else{
-                toastSuccess("ยกเลิกการลงทะเบียน");
+                toastError("Transaction Cancelled");
             }
         }
+        setPopupVisible(false);
+        setConsent(false);
     }
 
     let toggleConsent = () => {
@@ -53,10 +59,10 @@ const Balance = ({user}: Props) => {
 
     console.log(consent);
 
-
     return (
         <>
-            <Dialog open={popupVisible} onOpenChange={() => {setPopupVisible(!popupVisible); setConsent(false)}}>
+            <WaitingTransactionDialog open={loading}/>
+            <Dialog open={popupVisible} onOpenChange={() => {setPopupVisible(!popupVisible); setConsent(false);}}>
                 <DialogContent className={`min-w-[35%] min-h-[35%] m-auto rounded-[10px] flex flex-col`}>
                     <div className='flex font-bold text-xl col-start-1 col-span-2 items-center pt-3'>คุณต้องการเป็น Dealer ใช่มั้ย?</div>
                     <div className='p-5 text-sm'>เงื่อนไขสำหรับการเป็น Dealer คุณต้องวางเงินในบัญชีคุณเป็นเงินมัดจำ ตามที่ระบบกำหนด ซึ่งอาจจะต้องเสียเงินมัดจำทั้งหมด ถ้าหากจำนวนเงินที่ถูกรางวัลมีมากกว่า หรือ เท่ากับเงินมัดจำ นอกจากนี้ Dealer ยังไม่สามารถซื้อสลากในงวดนั้นได้</div>
