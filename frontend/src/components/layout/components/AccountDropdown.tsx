@@ -22,7 +22,7 @@ export default function AccountDropdown() {
 
   const onDisconnectedWallet = () => {
     disconnectWallet();
-    router.replace("/");
+    return router.replace("/");
   }
 
   return (
