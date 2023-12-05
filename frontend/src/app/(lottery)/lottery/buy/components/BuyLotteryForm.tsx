@@ -53,7 +53,6 @@ export default function BuyLotteryForm({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const maxId = lotteries.reduce((prev, current) => {
       return current.id > prev ? current.id : prev;
     }, 0);
