@@ -1,4 +1,4 @@
-FROM node:18
+FROM oven/bun:latest AS base
 
 COPY package*.json .
 
@@ -6,8 +6,8 @@ RUN bun install
 
 COPY . .
 
-EXPOSE 5050
+EXPOSE 3000
 
-ENV NEXT_PUBLIC_CONTRACT_ADDRESS=
+ENV NEXT_PUBLIC_CONTRACT_ADDRESS=0xc9aA66d8F5FB5495e7671398B2606CBE60159Ca6
 
 CMD ["bun", "run", "dev"]
