@@ -6,7 +6,7 @@ type Props = {
   reward: IRewardLottery
 }
 
-export default function LotteryReward({reward}: Props) {
+export default function LotteryReward({ reward }: Props) {
   return (
     <>
         <div className='p-8 border-2 border-black bg-white h-full'>

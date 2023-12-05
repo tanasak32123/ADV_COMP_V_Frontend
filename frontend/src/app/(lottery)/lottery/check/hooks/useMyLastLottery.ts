@@ -18,12 +18,12 @@ const useLastLottery = () => {
             return { id: i, baitNumber: e[0],playType , amount: Number(e[1]), baitValue: Number(e[2]), arrangeType }
         }) as ({id:number} & IBuyLottery)[];
         setMyLottery(last_lottery);
-    },[])
+    },[myLastLotteries])
 
     React.useEffect(() => {
         fetchMyLotteries();
         setLoading(true);
-    },[])
+    },[fetchMyLotteries])
 
     return {myLottery,loading};
 

@@ -4,99 +4,14 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
 import useMyLastLottery from "../hooks/useMyLastLottery";
 
-const invoices = [
-{
-    id: 1,
-    paymentLottery: "12",
-    paymentBet: "2",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "2",
-    paymentPrice: "10"
-},
-{
-    id: 2,
-    paymentLottery: "234",
-    paymentBet: "1",
-    paymentMethod: "เต๊ง",
-    paymentAmount: "3",
-    paymentPrice: "20"
-},
-{
-    id: 3,
-    paymentLottery: "455",
-    paymentBet: "4",
-    paymentMethod: "เต๊ง",
-    paymentAmount: "1",
-    paymentPrice: "4"
-},
-{
-    id: 4,
-    paymentLottery: "12",
-    paymentBet: "5",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "1",
-    paymentPrice: "20"
-},
-{
-    id: 5,
-    paymentLottery: "455",
-    paymentBet: "4",
-    paymentMethod: "เต๊ง",
-    paymentAmount: "1",
-    paymentPrice: "4"
-},
-{
-    id: 6,
-    paymentLottery: "12",
-    paymentBet: "5",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "1",
-    paymentPrice: "20"
-},
-{
-    id: 7,
-    paymentLottery: "12",
-    paymentBet: "5",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "1",
-    paymentPrice: "20"
-},
-{
-    id: 8,
-    paymentLottery: "12",
-    paymentBet: "5",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "1",
-    paymentPrice: "20"
-},
-{
-    id: 9,
-    paymentLottery: "455",
-    paymentBet: "4",
-    paymentMethod: "เต๊ง",
-    paymentAmount: "1",
-    paymentPrice: "4"
-},
-{
-    id: 10,
-    paymentLottery: "12",
-    paymentBet: "5",
-    paymentMethod: "โต๊ด",
-    paymentAmount: "1",
-    paymentPrice: "20"
-},
-]
-
 export function MyLottery() {
-        
-    const {myLottery,loading} = useMyLastLottery();
+    const { myLottery } = useMyLastLottery();
 
     return (
         <>

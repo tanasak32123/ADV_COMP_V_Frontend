@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from 'react'; 
+import React from 'react'; 
 import { IDate } from '@/interface/lottery/lottery.interface';
-import useLotteryContract from '@/hooks/useLotteryContract';
 import useReward from '../hooks/useReward';
 
 type Props = {
@@ -10,9 +9,7 @@ type Props = {
 }
 
 export default function Result({date}: Props) {
-    const [win, setWin] = useState(false);
-
-    const {reward,loading} = useReward();
+    const { reward, loading } = useReward();
     const num_reward = Number(reward);
     
     return (

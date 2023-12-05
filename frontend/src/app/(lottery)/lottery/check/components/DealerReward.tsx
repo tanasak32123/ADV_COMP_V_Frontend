@@ -3,32 +3,29 @@
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox';
 import withAuth from '@/components/withAuth'
-import { useWeb3Store } from '@/state/web3Store';
-import React, { useState } from 'react'
+import React from 'react'
 import useDealerReward from '../hooks/useDealerReward';
 import { ethers } from 'ethers';
 import { toastError, toastSuccess } from '@/lib/toast';
 import useLotteryContract from '@/hooks/useLotteryContract';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import useDealer from '@/hooks/useDealer';
 
 type Props = {} 
 
 const Dealer = ({}: Props) => {
-  const { addDealer, loading: adddealer_loading } = useLotteryContract();
-  const {dealer} = useDealer();
+  const { addDealer } = useLotteryContract();
   const {reward,loading,fetchDealerReward} = useDealerReward();
   const reward_eth = ethers.formatEther(Number(reward));
-  const [consent,setConsent] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [consent,setConsent] = React.useState(false);
+  const [popupVisible, setPopupVisible] = React.useState(false);
   const router = useRouter();
   
-  let togglePopup = () => {
-    setPopupVisible(!popupVisible);
-    }
+  const togglePopup = React.useCallback(() => {
+    setPopupVisible((prev) => !prev);
+  }, []);
 
-  let applyTransaction = async () => {
+  const applyTransaction = React.useCallback(async () => {
     const {result, message} = await addDealer();
     if (result){
       toastSuccess("ลงทะเบียน Dealer สำเร็จ");
@@ -42,25 +39,11 @@ const Dealer = ({}: Props) => {
     setPopupVisible(false);
     setConsent(false);
     router.push('/dashboard');
-  }
+  }, [addDealer, router])
 
-  let toggleConsent = () => {
-    setConsent(!consent);
-  }
-
-  const customStyles = {
-    content: {
-        width: '35%', // Set the width as desired
-        height: '35%', // Set the height as desired
-        margin: 'auto', // Center the modal
-        borderRadius: '10px'
-    },
-  };
-
-  // React.useEffect(()=>{
-  //   if (!dealer || dealer !== "0x0000000000000000000000000000000000000000") return;
-  //   fetchDealerReward();
-  // },[dealer,fetchDealerReward]);
+  const toggleConsent = React.useCallback(() => {
+    setConsent((prev) => !prev);
+  }, []);
 
   return (
     <>
