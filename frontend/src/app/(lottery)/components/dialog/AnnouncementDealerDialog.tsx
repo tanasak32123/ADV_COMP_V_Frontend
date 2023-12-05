@@ -1,7 +1,8 @@
 "use client";
 
+import WaitingTransactionDialog from "@/components/dialog/WaitingTransactionDialog";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import useDealer from "@/hooks/useDealer";
 import useLotteryContract from "@/hooks/useLotteryContract";
 import { toastError, toastSuccess } from "@/lib/toast";
@@ -9,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function AnnouncementDealerDialog() {
-  const { chooseDealer } = useLotteryContract();
+  const { chooseDealer, loading } = useLotteryContract();
 
   const { dealer } = useDealer();
 
@@ -39,6 +40,7 @@ export default function AnnouncementDealerDialog() {
   }, [dealer, isAnnouncementDealerDay]);
 
   return (
+    <>
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
@@ -49,5 +51,8 @@ export default function AnnouncementDealerDialog() {
         </DialogHeader>
       </DialogContent>
     </Dialog>
+    
+    <WaitingTransactionDialog open={loading} />
+    </>
   );
 }

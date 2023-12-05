@@ -3,8 +3,6 @@ pragma solidity 0.8.0;
 
 contract Lottery  {
 
-    int[] public arr = [0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0];
-
     enum StateType { ChoosingDealer, Baiting, CheckReward } 
     enum PlayType {All, Front, Back}
     enum ArrangeType {Tod, Teng}
@@ -33,7 +31,6 @@ contract Lottery  {
         uint256 totalReward ;  
     }
 
-    address owner;
     address dealer; 
 
     uint256 stakeAmount = 50;
@@ -56,7 +53,6 @@ contract Lottery  {
     string twoNumber ; 
 
     constructor(){
-        owner = msg.sender;
         resetValue();
 
         // init play map 
