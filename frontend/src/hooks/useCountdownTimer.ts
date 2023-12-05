@@ -14,11 +14,12 @@ export interface ITimerState {
   hours: number;
   minutes: number;
   seconds: number;
+  message: string;
 }
 
 interface TimerAcion {
   type: TIMER_TYPE_ACTION;
-  payload?: ITimerState;
+  payload?: Partial<ITimerState>;
 }
 
 const defaultValue: ITimerState = {
@@ -26,6 +27,7 @@ const defaultValue: ITimerState = {
   hours: 0,
   minutes: 0,
   seconds: 0,
+  message: "",
 };
 
 const timerReducer = (state: ITimerState, action: TimerAcion) => {
@@ -62,14 +64,13 @@ const useCountdownTimer = ({ countdownDate }: Props) => {
 
       if (difference <= 0) {
         clearInterval(interval);
-        dispatch({ type: TIMER_TYPE_ACTION.CLEAR_TIMER });
+        dispatch({ type: TIMER_TYPE_ACTION.SET_TIMER, payload: { ...defaultValue, message: "Finished" } });
       }
     }, 1000);
-
     return () => clearInterval(interval);
   }, [countdownDate]);
 
-  return state;
+  return { state };
 };
 
 export default useCountdownTimer;

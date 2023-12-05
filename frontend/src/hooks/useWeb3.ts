@@ -7,12 +7,10 @@ const useWeb3 = () => {
   const {
     setWallet,
     disconnect,
-    changeAccount,
+    // changeAccount,
     changeNetwork,
     isAuthenticated,
   } = useWeb3Store();
-
-  const { getDealer } = useLotteryContract();
 
   const [loading, setLoading] = React.useState(false);
 
@@ -30,7 +28,7 @@ const useWeb3 = () => {
       const signer = await provider.getSigner();
       const chain = Number(await (await provider.getNetwork()).chainId);
 
-      const dealerAddress = await getDealer();
+      // const dealerAddress = await getDealer();
 
       setWallet({
         address: accounts[0],
@@ -38,10 +36,7 @@ const useWeb3 = () => {
         currentChain: chain,
         provider,
         isAuthenticated: true,
-        // isDealer: dealerAddress === accounts[0],
-        // hasDealer: dealerAddress !== '0x0000000000000000000000000000000000000000',
       });
-
     } catch (error: unknown) {
       const message =
         error && typeof error === "object" && "message" in error
@@ -51,7 +46,7 @@ const useWeb3 = () => {
     } finally {
       setLoading(false);
     }
-  }, [getDealer, setWallet]);
+  }, [setWallet]);
 
   const myBalance = React.useCallback(async () => {
     setLoading(true);
@@ -74,6 +69,7 @@ const useWeb3 = () => {
 
   const disconnectWallet = React.useCallback(() => {
     disconnect();
+    localStorage.removeItem("isCheckDealerIsPop");
   }, [disconnect]);
 
   React.useEffect(() => {
@@ -91,6 +87,7 @@ const useWeb3 = () => {
         accounts.every((value) => typeof value === "string")
       )
         connectWallet();
+      localStorage.removeItem("isCheckDealerIsPop");
     });
 
     window.ethereum.on("chainChanged", (network) => {

@@ -13,15 +13,15 @@ type Props = {
   reward: IRewardLottery;
 };
 
-const getNextTimeReward = () => {
+const getNextRewardTimer = () => {
   const nowTime = new Date();
   const nowYear = nowTime.getFullYear();
   const nowMonth = nowTime.getMonth();
   const nowDate = nowTime.getDate();
 
-  const nextDate = nowDate <= 16 ? 5 : 21;
-  const nextMonth = nowDate >= 16 ? nowMonth + 1 : nowMonth;
-  const nextYear = nowYear === 12 && nowDate >= 16 ? nowYear + 1 : nowYear;
+  const nextDate = nowDate > 17 ? 1 : nowDate < 17 ? 16 : 1;
+  const nextMonth = nowDate > 17 ? nowMonth + 1 : nowMonth;
+  const nextYear = nowYear === 12 && nowDate > 17 ? nowYear + 1 : nowYear;
   const nextTime = new Date(nextYear, nextMonth, nextDate, 18);
 
   return nextTime;
@@ -35,7 +35,7 @@ export default function AwardResult({ reward }: Props) {
 
   const router = useRouter();
 
-  const timer = useCountdownTimer({ countdownDate: getNextTimeReward() });
+  const { state: timer } = useCountdownTimer({ countdownDate: getNextRewardTimer() });
 
   return (
     <div className="bg-white w-full text-black mt-10 p-4 rounded-[30px]">
