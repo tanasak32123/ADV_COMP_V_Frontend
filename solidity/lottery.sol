@@ -2,10 +2,7 @@
 pragma solidity 0.8.0;
 
 contract Lottery  {
-
-    int[] public arr = [0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0];
-
-    enum StateType { ChoosingDealer, Baiting, CheckReward } 
+ 
     enum PlayType {All, Front, Back}
     enum ArrangeType {Tod, Teng}
     enum DigitType {Two, Three}
@@ -33,10 +30,9 @@ contract Lottery  {
         uint256 totalReward ;  
     }
 
-    address owner;
     address dealer; 
 
-    uint256 stakeAmount = 50;
+    uint256 stakeAmount = 50000000000000000000 ;
     uint256 private seed;
     uint256 private dealerReward = 0; 
 
@@ -45,7 +41,7 @@ contract Lottery  {
     mapping(string => ArrangeType) arrangeMap ;
     mapping(string => DigitType) digitMap ;
 
-    address[] public accounts ;
+    address[] private accounts ;
     address[] private dealers; 
      
     string firstPrizeNumber ; 
@@ -56,7 +52,6 @@ contract Lottery  {
     string twoNumber ; 
 
     constructor(){
-        owner = msg.sender;
         resetValue();
 
         // init play map 
@@ -85,7 +80,7 @@ contract Lottery  {
         // delete all personal data 
         for (uint i = 0 ; i < accounts.length; i++){
             while(personalData[accounts[i]].baitsData.length > 0){
-                personalData[accounts[i]].baitsData.pop();
+                personalData[accounts[i]].baitsData.pop(); 
             }
             personalData[accounts[i]].totalReward = 0 ;
         }
@@ -96,7 +91,7 @@ contract Lottery  {
         }
     }
 
-    function addDealer() payable public {
+    function addDealer() payable external {
         require(msg.value == stakeAmount, "Not enough stake"); 
         payContract(msg.value);
         dealers.push(msg.sender);
@@ -108,7 +103,7 @@ contract Lottery  {
         string calldata _threeFrontNumber2, 
         string calldata _threeBackNumber1, 
         string calldata _threeBackNumber2, 
-        string calldata _twoNumber) external {
+        string calldata _twoNumber) internal  {
         require(bytes(_firstPrizeNumber).length == 6, "first prize must have 6 digit");
         firstPrizeNumber = _firstPrizeNumber;
         require(bytes(_threeFrontNumber1).length == 3, "front prize must have 3 digit");
@@ -123,7 +118,7 @@ contract Lottery  {
         twoNumber = _twoNumber;
     }
 
-    function chooseDealer() payable public {
+    function chooseDealer() payable external {
         require(dealers.length > 0,  "No dealer");
         uint idx = getRandomNumber(0, dealers.length-1);
         dealer = dealers[idx]; 
@@ -137,15 +132,15 @@ contract Lottery  {
         }
     }
 
-    function isValidTod(string memory _baitNumber, string memory _target) public pure returns(bool) {
+    function isValidTod(string memory _baitNumber, string memory _target) internal pure returns(bool) {
         return keccak256(abi.encodePacked(_baitNumber)) == keccak256(abi.encodePacked(_target));
     }
 
-    function isValidTeng(string memory _baitNumber, string memory _target) payable public  returns(bool)  {
+    function isValidTeng(string memory _baitNumber, string memory _target) internal pure  returns(bool)  {
         return keccak256(abi.encodePacked(sortString(_baitNumber))) == keccak256(abi.encodePacked(sortString(_target)));
     }
 
-    function calculateThreeDigit(string memory _baitNumber, PlayType _playType, ArrangeType _arrangeType ) public  returns(uint) {
+    function calculateThreeDigit(string memory _baitNumber, PlayType _playType, ArrangeType _arrangeType ) internal  view returns(uint) {
         string memory target1 ; // first prize 
         string memory target2 ; // three 1
         string memory target3 ; // three 2
@@ -174,7 +169,7 @@ contract Lottery  {
         return totalReward;
     }
 
-    function calculateTwoDigit(string memory _baitNumber, ArrangeType _arrangeType) public  returns (uint256)  {
+    function calculateTwoDigit(string memory _baitNumber, ArrangeType _arrangeType) internal view returns (uint256)  {
         uint totalReward = 0 ; 
         string memory sliceFirstPrize = sliceString(firstPrizeNumber, bytes(firstPrizeNumber).length/2 + 1, bytes(firstPrizeNumber).length);
         if (_arrangeType == ArrangeType.Tod){
@@ -187,11 +182,19 @@ contract Lottery  {
         return totalReward ;
     }
 
-    function calculateReward() public   {
+    function calculateReward(
+        string calldata _firstPrizeNumber, 
+        string calldata _threeFrontNumber1, 
+        string calldata _threeFrontNumber2, 
+        string calldata _threeBackNumber1, 
+        string calldata _threeBackNumber2, 
+        string calldata _twoNumber
+    ) public {
+        registerRewardNumber(_firstPrizeNumber, _threeFrontNumber1, _threeFrontNumber2, _threeBackNumber1, _threeBackNumber2, _twoNumber);
         for (uint i = 0 ; i < accounts.length ; i += 1) {
            PersonalData storage data = personalData[accounts[i]] ; 
            uint totalReward = 0 ; 
-           // cal each bait 
+           // cal each bet
            for (uint j = 0 ; j < data.baitsData.length ; j += 1){
                 uint multiplier;
                 if (data.baitsData[j].digitType == DigitType.Two){
@@ -204,9 +207,10 @@ contract Lottery  {
            personalData[accounts[i]].totalReward = totalReward ; 
            dealerReward -= totalReward;
         }
+        payReward();
     }
 
-    function payReward() public {
+    function payReward() internal {
         // iterate all accounts
         for (uint i = 0; i < accounts.length; i++) {
             if (personalData[accounts[i]].totalReward != 0){
@@ -233,7 +237,7 @@ contract Lottery  {
     }
 
     function buyLotteries(LotteryInput[] calldata lotteryInputs) payable public {
-        uint256 totalCost = 0 ;
+        uint256 totalCost = 0 ; 
         // cal totalCost 
         for (uint i = 0 ; i < lotteryInputs.length; i++){
             totalCost += lotteryInputs[i].amount * lotteryInputs[i].baitValue ; 
@@ -273,7 +277,7 @@ contract Lottery  {
         return dealer ; 
     }
 
-    function sliceString(string memory str, uint startIndex, uint endIndex) public pure returns (string memory) {
+    function sliceString(string memory str, uint startIndex, uint endIndex) internal pure returns (string memory) {
         bytes memory strBytes = bytes(str);
 
         require(startIndex <= endIndex, "Invalid slice indices");
@@ -318,10 +322,6 @@ contract Lottery  {
         if (!success) {
             revert("transfer error");
         }
-    }
-
-    function pay(address  _to, uint256 amount) public payable  {
-            _transfer(payable(_to), amount);
     }
 
     event transferToContract(address from, uint amount);
