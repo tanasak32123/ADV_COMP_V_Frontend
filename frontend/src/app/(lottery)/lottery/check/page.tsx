@@ -5,8 +5,10 @@ import apiReward from '@/utils/apiReward'
 import { IDate, IRewardLottery, ResultResponse } from '@/interface/lottery/lottery.interface'
 import { MyLottery } from './components/MyLottery'
 import DealerReward from './components/DealerReward'
+import DialogCheck from './components/DialogCheck'
 
 type Props = {}
+
 
 export default async function CheckLotteryPage({}: Props) {
 
@@ -38,6 +40,7 @@ export default async function CheckLotteryPage({}: Props) {
           <div className='p-2 col-span-2'><MyLottery/></div>
           <div className='pl-2 pt-8'><DealerReward/></div>
         </div>
+        <DialogCheck result={reward}/>
       </div>
     </>
   )

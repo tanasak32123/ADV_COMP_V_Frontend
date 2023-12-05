@@ -3,6 +3,7 @@ import React from "react";
 import { ethers, BrowserProvider, JsonRpcSigner } from "ethers";
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "./useStore";
+import { IRewardLottery } from "@/interface/lottery/lottery.interface";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
@@ -112,7 +113,7 @@ const useLotteryContract = () => {
       const provider = new BrowserProvider(ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      const lotteries = await contract.getInformation();
+      const lotteries = await contract.getLastInformation();
       return lotteries.totalReward;
     } catch (err:unknown) {
       const message =
@@ -165,6 +166,44 @@ const useLotteryContract = () => {
     }
   },[])
 
+  const lastDealerReward = React.useCallback(async () => {
+    setLoading(true);
+    const { ethereum } = window;
+    if (!ethereum) return;
+    try{
+      const provider = new BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      const lastDealer = await contract.getLastDealerReward();
+      console.log(lastDealer);
+      return lastDealer;
+    }catch (err:unknown){
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+    }finally{
+      setLoading(false);
+    }
+  },[])
+
+  const checkLottery = React.useCallback(async (result: IRewardLottery) => {
+    try {
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+      const transaction = await contract.calculateReward(result.first,result.last3f_1,result.last3f_2,result.last3b_1,result.last3b_2,result.last2);
+      setLoading(true);
+      await transaction.wait();
+    } catch (err: unknown) {
+      const message =
+        (err && typeof err === "object" && "message" in err && err.message) ||
+        "Something went wrong!";
+      console.log(message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [signer]); 
+
   return {
     getDealer,
     addDealer,
@@ -175,6 +214,8 @@ const useLotteryContract = () => {
     myReward,
     imDealer,
     myLastLotteries,
+    lastDealerReward,
+    checkLottery,
   };
 };
 
