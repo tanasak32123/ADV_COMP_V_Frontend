@@ -24,25 +24,6 @@
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "accounts",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "addDealer",
 		"outputs": [],
@@ -85,25 +66,6 @@
 		"name": "addLottery",
 		"outputs": [],
 		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "arr",
-		"outputs": [
-			{
-				"internalType": "int256",
-				"name": "",
-				"type": "int256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -152,62 +114,40 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_firstPrizeNumber",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_threeFrontNumber1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_threeFrontNumber2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_threeBackNumber1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_threeBackNumber2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_twoNumber",
+				"type": "string"
+			}
+		],
 		"name": "calculateReward",
 		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_baitNumber",
-				"type": "string"
-			},
-			{
-				"internalType": "enum Lottery.PlayType",
-				"name": "_playType",
-				"type": "uint8"
-			},
-			{
-				"internalType": "enum Lottery.ArrangeType",
-				"name": "_arrangeType",
-				"type": "uint8"
-			}
-		],
-		"name": "calculateThreeDigit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_baitNumber",
-				"type": "string"
-			},
-			{
-				"internalType": "enum Lottery.ArrangeType",
-				"name": "_arrangeType",
-				"type": "uint8"
-			}
-		],
-		"name": "calculateTwoDigit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -317,67 +257,20 @@
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_baitNumber",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_target",
-				"type": "string"
-			}
-		],
-		"name": "isValidTeng",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_baitNumber",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_target",
-				"type": "string"
-			}
-		],
-		"name": "isValidTod",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
-				"name": "_to",
+				"name": "player",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
 			}
 		],
-		"name": "pay",
-		"outputs": [],
-		"stateMutability": "payable",
+		"name": "isDealerCandidate",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -395,83 +288,9 @@
 	},
 	{
 		"inputs": [],
-		"name": "payReward",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_firstPrizeNumber",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_threeFrontNumber1",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_threeFrontNumber2",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_threeBackNumber1",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_threeBackNumber2",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_twoNumber",
-				"type": "string"
-			}
-		],
-		"name": "registerRewardNumber",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "resetValue",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "str",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "startIndex",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "endIndex",
-				"type": "uint256"
-			}
-		],
-		"name": "sliceString",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "pure",
 		"type": "function"
 	}
 ]

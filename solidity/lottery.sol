@@ -31,12 +31,15 @@ contract Lottery  {
     }
 
     address dealer; 
+    address lastDealer;
 
     uint256 stakeAmount = 50000000000000000000 ;
     uint256 private seed;
     uint256 private dealerReward = 0; 
+    uint256 private lastDealerReward = 0;
 
     mapping(address => PersonalData) personalData ;
+    mapping(address => PersonalData) lastPersonalData ;
     mapping(string => PlayType) playMap ; 
     mapping(string => ArrangeType) arrangeMap ;
     mapping(string => DigitType) digitMap ;
@@ -70,8 +73,12 @@ contract Lottery  {
     }
 
     function resetValue() public  {
+        lastDealerReward = dealerReward;
         dealerReward = 0 ;
+        
+        lastDealer = dealer;
         dealer = address(0);
+        
         // delete all value in dealer
         while(dealers.length > 0 ){
             dealers.pop();
@@ -79,6 +86,7 @@ contract Lottery  {
         
         // delete all personal data 
         for (uint i = 0 ; i < accounts.length; i++){
+            lastPersonalData[accounts[i]] = personalData[accounts[i]] ; 
             while(personalData[accounts[i]].baitsData.length > 0){
                 personalData[accounts[i]].baitsData.pop(); 
             }
@@ -219,6 +227,7 @@ contract Lottery  {
            dealerReward -= totalReward;
         }
         payReward();
+        resetValue();
     }
 
     function payReward() internal {
@@ -284,6 +293,10 @@ contract Lottery  {
         return personalData[msg.sender];
     }
 
+    function getLastInformation() external view returns(PersonalData memory){
+        return lastPersonalData[msg.sender];
+    }
+
     function getDealer() public view returns(address) {
         return dealer ; 
     }
@@ -312,6 +325,13 @@ contract Lottery  {
         return false;
     }
 
+    function getDealerReward() public view returns(uint) {
+        return dealerReward;
+    }
+
+    function getLastDealerReward() public view returns(uint) {
+        return lastDealerReward;
+    }
 
     function getBalance() public view returns(uint) {
         return msg.sender.balance;
