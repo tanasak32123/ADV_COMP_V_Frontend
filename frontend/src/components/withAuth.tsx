@@ -25,9 +25,9 @@ const withAuth = <T extends Props>(Component: React.ComponentType<T>, role = USE
       if (!loading && !isAuthenticated) {
         return router.replace("/unauthorized");
       }
-      if (!loading && isAuthenticated && role === USER_ROLE.BUYER && isDealer) {
-        return router.back();
-      }
+      // if (!loading && isAuthenticated && role === USER_ROLE.BUYER && isDealer) {
+      //   return router.back();
+      // }
     }, [isAuthenticated, isDealer, loading, router]);
 
     if (loading) {

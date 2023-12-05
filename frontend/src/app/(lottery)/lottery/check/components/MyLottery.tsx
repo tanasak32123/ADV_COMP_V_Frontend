@@ -9,6 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import useMyLastLottery from "../hooks/useMyLastLottery";
 
 const invoices = [
 {
@@ -94,42 +95,46 @@ const invoices = [
 ]
 
 export function MyLottery() {
-return (
-    <>
-        <div className='p-5'>
-            <div className='py-3'>My Lottery List</div>
-            <div className="overflow-y-auto h-[450px]">
-                <Table className="">
-                <TableCaption>A list of your Lottery.</TableCaption>
-                <TableHeader className="sticky top-0">
-                    <TableRow>
-                    <TableHead className="w-[100px]">เลขที่ซื้อ</TableHead>
-                    <TableHead>bet</TableHead>
-                    <TableHead>ประเภท</TableHead>
-                    <TableHead>จำนวน</TableHead>
-                    <TableHead className="text-right">ราคา</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {invoices.map((invoice) => (
-                    <TableRow key={invoice.id}>
-                        <TableCell className="font-medium">{invoice.paymentLottery}</TableCell>
-                        <TableCell>{invoice.paymentBet}</TableCell>
-                        <TableCell>{invoice.paymentMethod}</TableCell>
-                        <TableCell>{invoice.paymentAmount}</TableCell>
-                        <TableCell className="text-right">{invoice.paymentPrice} ETH</TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-                <TableFooter>
-                    <TableRow>
-                    <TableCell colSpan={4} className="font-bold">Total</TableCell>
-                    <TableCell className="text-right">$2,500.00</TableCell>
-                    </TableRow>
-                </TableFooter>
-                </Table>
+        
+    const {myLottery,loading} = useMyLastLottery();
+
+    return (
+        <>
+            <div className='p-5'>
+                <div className='py-3'>My Lottery List</div>
+                <div className="overflow-y-auto h-[450px]">
+                    <Table className="">
+                    {myLottery && myLottery.length === 0 && (
+                            <TableCaption>งวดที่แล้วไม่ได้ซื้อสลาก ;-; </TableCaption>
+                    )}
+                    {myLottery && myLottery.length > 0 && (
+                            <TableCaption>A list of your Lottery.</TableCaption>
+                    )}
+                    <TableHeader className="sticky top-0">
+                        <TableRow>
+                        <TableHead className="w-[100px]">เลข</TableHead>
+                        <TableHead>รูปแบบ</TableHead>
+                        <TableHead>Bet</TableHead>
+                        <TableHead>ประเภท</TableHead>
+                        <TableHead>จำนวน</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        { myLottery && myLottery.length > 0 && (<>
+                            {myLottery.map((lottery) => (
+                            <TableRow key={lottery.id}>
+                            <TableCell className="font-medium">{lottery.baitNumber}</TableCell>
+                                <TableCell className="pl-5">{lottery.playType}</TableCell>
+                                <TableCell>{lottery.baitValue}</TableCell>
+                                <TableCell>{lottery.arrangeType}</TableCell>
+                                <TableCell>{lottery.amount}</TableCell>
+                            </TableRow>
+                        ))}
+                        </>)}
+                    </TableBody>
+                    </Table>
+                </div>
             </div>
-        </div>
-    </>
-)
+        </>
+    )
 }
