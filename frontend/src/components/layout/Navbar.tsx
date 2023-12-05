@@ -14,12 +14,12 @@ import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "@/hooks/useStore";
 import Image from "next/image";
 import Logo from '@/app/favicon.ico';
-import useDealer from "@/hooks/useDealer";
+// import useDealer from "@/hooks/useDealer";
 
 export default function Navbar() {
   const {data: isAuthenticated, loading} = useStore<TWeb3Store, boolean>(useWeb3Store, (state) => state.isAuthenticated);
 
-  const { dealer, isDealer, loading: dealerLoading } = useDealer();
+  // const { dealer, isDealer, loading: dealerLoading } = useDealer();
 
   return (
     <Collapsible className="fixed z-50">

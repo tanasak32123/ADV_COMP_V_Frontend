@@ -90,14 +90,14 @@ const useWeb3 = () => {
         accounts.length > 0 &&
         accounts.every((value) => typeof value === "string")
       )
-        changeAccount(accounts[0] as string);
+        connectWallet();
     });
 
     window.ethereum.on("chainChanged", (network) => {
       if (typeof network !== "string") return;
       changeNetwork(Number(network));
     });
-  }, [changeAccount, changeNetwork]);
+  }, [changeNetwork, connectWallet]);
 
   return {
     connectWallet,

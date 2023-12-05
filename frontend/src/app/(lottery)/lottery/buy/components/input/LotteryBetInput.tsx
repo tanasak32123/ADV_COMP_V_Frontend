@@ -22,7 +22,7 @@ export default function LotteryBetInput({ control }: Props) {
       render={({ field: { value, onChange } }) => (
         <FormItem>
           <div className="flex items-center mb-3">
-            <FormLabel className="me-2">Bet:</FormLabel>
+            <FormLabel className="me-2 whitespace-nowrap">Bet (Wei):</FormLabel>
             <FormControl>
               <Input
                 type="number"

@@ -24,7 +24,7 @@ const BuyLotteryPage = () => {
   const [digit, setDigit] = React.useState<DIGIT_TYPE>(DIGIT_TYPE.TWO);
   const toggleDigitRef = React.useRef<HTMLDivElement | null>(null);
 
-  const { buyLotteries } = useLotteryContract();
+  const { buyLotteries, loading } = useLotteryContract();
 
   const handleChangeDigit = React.useCallback((val: DIGIT_TYPE) => {
     if (!val) return;
@@ -62,7 +62,7 @@ const BuyLotteryPage = () => {
       toastSuccess("You buy lotteries successfully.");
       return router.push("/dashboard");
     } catch {
-      toastError("Something went wrong!");
+      toastError("Transaction was cancelled.");
     }
   }, [buyLotteries, lotteries, router, totalPrice]);
 
@@ -129,7 +129,7 @@ const BuyLotteryPage = () => {
             <div className="text-xs sm:text-sm">
                ทั้งหมด{" "}
               <span className="text-green-500 font-bold">
-                {totalPrice.toLocaleString()} ETH
+                {totalPrice.toLocaleString()} Wei
               </span>
             </div>
             <Button
