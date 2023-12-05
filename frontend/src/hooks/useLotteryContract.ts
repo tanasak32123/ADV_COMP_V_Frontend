@@ -36,7 +36,8 @@ const useLotteryContract = () => {
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
       
-      await contract.addDealer({ value: 50 });
+      const transaction = await contract.addDealer({ value: 50 });
+      await transaction.wait();
       return true;
     } catch (err: unknown) {
       const message =
@@ -54,7 +55,8 @@ const useLotteryContract = () => {
     setLoading(true);
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      await contract.buyLotteries(data, {value, gasLimit: 3000000});
+      const transaction = await contract.buyLotteries(data, {value, gasLimit: 3000000});
+      await transaction.wait();
     } catch (err: unknown) {
       const message =
         (err && typeof err === "object" && "message" in err && err.message) ||
@@ -91,6 +93,7 @@ const useLotteryContract = () => {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
       const lotteries = await contract.getInformation();
+      console.log('lotteries');
       return lotteries.baitsData;
     }catch (err:unknown){
       const message =
