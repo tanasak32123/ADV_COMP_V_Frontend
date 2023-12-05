@@ -14,12 +14,12 @@ import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "@/hooks/useStore";
 import Image from "next/image";
 import Logo from '@/app/favicon.ico';
-// import useDealer from "@/hooks/useDealer";
+import useDealer from "@/hooks/useDealer";
 
 export default function Navbar() {
   const {data: isAuthenticated, loading} = useStore<TWeb3Store, boolean>(useWeb3Store, (state) => state.isAuthenticated);
 
-  // const { dealer, isDealer, loading: dealerLoading } = useDealer();
+  const { dealer, isDealer, loading: dealerLoading } = useDealer();
 
   return (
     <Collapsible className="fixed z-50">
@@ -40,7 +40,7 @@ export default function Navbar() {
             <React.Fragment>
               <div className="items-center justify-end gap-x-2 hidden sm:flex">
                 <Link href="/dashboard">dashboard</Link>
-                <Link href="/lottery/buy">ซื้อสลาก</Link>
+                {dealer && dealer !== '0x0000000000000000000000000000000000000000' && !dealerLoading && !isDealer && <Link href="/lottery/buy">ซื้อสลาก</Link>}
                 <Link href="/lottery/check">ตรวจสอบสลาก</Link>
                 <div className="border-l-2 border-white h-[20px]"></div>
               </div>
@@ -63,9 +63,11 @@ export default function Navbar() {
               dashboard
             </Link>
             <hr className="border-white" />
-            <Link href="/lottery/buy" className="text-white">
-              ซื้อสลาก
-            </Link>
+            {dealer && dealer !== '0x0000000000000000000000000000000000000000' && !dealerLoading && !isDealer && 
+              <Link href="/lottery/buy" className="text-white">
+                ซื้อสลาก
+              </Link>
+            }
             <hr className="border-white" />
             <Link href="/lottery/check" className="text-white">
               ตรวจสอบสลาก

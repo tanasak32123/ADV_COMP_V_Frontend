@@ -15,6 +15,7 @@ import withAuth from "@/components/withAuth";
 import useLotteryContract from "@/hooks/useLotteryContract";
 import { toastError, toastSuccess } from "@/lib/toast";
 import WaitingTransactionDialog from "@/components/dialog/WaitingTransactionDialog";
+import { USER_ROLE } from "@/enum/user/user.interface";
 
 export type TLottery = { id: number } & IBuyLottery;
 
@@ -148,4 +149,4 @@ const BuyLotteryPage = () => {
   );
 };
 
-export default withAuth(BuyLotteryPage);
+export default withAuth(BuyLotteryPage, USER_ROLE.BUYER);

@@ -10,7 +10,7 @@ import React from "react";
 
 type Props = {};
 
-const withAuth = <T extends Props>(Component: React.ComponentType<T>, role = USER_ROLE.BUYER) => {
+const withAuth = <T extends Props>(Component: React.ComponentType<T>, role = USER_ROLE.ALL) => {
   const ComponentWithAuth = (props: Omit<T, keyof Props>) => {
     const router = useRouter();
 
@@ -19,18 +19,18 @@ const withAuth = <T extends Props>(Component: React.ComponentType<T>, role = USE
       (state) => state.isAuthenticated
     );
 
-    const { isDealer } = useDealer(); 
+    const { dealer, isDealer, loading: dealerLoading } = useDealer(); 
 
     React.useEffect(() => {
       if (!loading && !isAuthenticated) {
         return router.replace("/unauthorized");
       }
-      // if (!loading && isAuthenticated && role === USER_ROLE.BUYER && isDealer) {
-      //   return router.back();
-      // }
-    }, [isAuthenticated, isDealer, loading, router]);
+      if (!loading && isAuthenticated && role === USER_ROLE.BUYER && dealer && dealer !== '0x0000000000000000000000000000000000000000' && !dealerLoading && isDealer) {
+        return router.replace("/unauthorized");
+      }
+    }, [dealer, dealerLoading, isAuthenticated, isDealer, loading, router]);
 
-    if (loading) {
+    if (loading || dealerLoading) {
       return <Loading className="text-black" />;
     }
 

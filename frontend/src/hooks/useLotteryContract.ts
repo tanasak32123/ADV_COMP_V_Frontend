@@ -36,7 +36,7 @@ const useLotteryContract = () => {
   const addDealer = React.useCallback(async () => {
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      const transaction = await contract.addDealer({ value: 5000000 });
+      const transaction = await contract.addDealer({ value: 5000000000000000 });
       setLoading(true);
       await transaction.wait();
       return {result: true, message: "success"};

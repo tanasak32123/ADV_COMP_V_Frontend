@@ -1,4 +1,5 @@
 export enum USER_ROLE {
-  BUYER=0,
-  DEALER=1  
+  ALL=0,
+  BUYER=1,
+  DEALER=2  
 }
