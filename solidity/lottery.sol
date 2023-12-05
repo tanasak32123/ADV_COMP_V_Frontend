@@ -210,9 +210,10 @@ contract Lottery  {
         string calldata _twoNumber
     ) public {
         registerRewardNumber(_firstPrizeNumber, _threeFrontNumber1, _threeFrontNumber2, _threeBackNumber1, _threeBackNumber2, _twoNumber);
+        uint totalPlayerReward = 0 ; 
         for (uint i = 0 ; i < accounts.length ; i += 1) {
            PersonalData storage data = personalData[accounts[i]] ; 
-           uint totalReward = 0 ; 
+           uint playerReward = 0 ; 
            // cal each bet
            for (uint j = 0 ; j < data.baitsData.length ; j += 1){
                 uint multiplier;
@@ -221,10 +222,27 @@ contract Lottery  {
                 } else {
                     multiplier =  calculateThreeDigit(data.baitsData[j].baitNumber, data.baitsData[j].playType, data.baitsData[j].arrangeType) ; 
                 }
-                totalReward += (data.baitsData[j].baitValue * data.baitsData[j].amount * multiplier )/100 ; 
+                playerReward += (data.baitsData[j].baitValue * data.baitsData[j].amount * multiplier )/100 ; 
            }
-           personalData[accounts[i]].totalReward = totalReward ; 
-           dealerReward -= totalReward;
+           personalData[accounts[i]].totalReward = playerReward ; 
+           totalPlayerReward += playerReward ; 
+        }
+        
+        // check amount
+        if (totalPlayerReward > getContractBalance()){
+            uint addOn = stakeAmount/accounts.length ; 
+            // refund user 
+            for (uint i = 0 ; i < accounts.length ; i += 1){
+                uint realReward = 0 ; 
+                for (uint j = 0 ; j < personalData[accounts[i]].baitsData.length ; j += 1){
+                    realReward += personalData[accounts[i]].baitsData[j].baitValue * personalData[accounts[i]].baitsData[j].amount;
+                }
+                
+                personalData[accounts[i]].totalReward = realReward +  addOn;
+            }
+            dealerReward = 0 ;
+        }else {
+            dealerReward -= totalPlayerReward;
         }
         payReward();
         resetValue();
