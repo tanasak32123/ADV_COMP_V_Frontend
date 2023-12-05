@@ -36,7 +36,7 @@ const Balance = ({user}: Props) => {
 
     const {im: iscandidate,loading: isdealer_loading, fetchimDealer} = useIsDealer();
 
-    const { balance, loading: balanceLoading} = useBalance();
+    const { balance, loading: balanceLoading , fetchBalance} = useBalance();
 
     const ETH_Balance = React.useMemo(() => Number(ethers.formatEther(balance.toString())).toFixed(4), [balance]);
 
@@ -60,6 +60,11 @@ const Balance = ({user}: Props) => {
     let toggleConsent = () => {
         setConsent(!consent);
     }
+
+    React.useEffect(() => {
+        if (!address) return;
+        fetchBalance();
+    },[address,fetchBalance])
 
     return (
         <>

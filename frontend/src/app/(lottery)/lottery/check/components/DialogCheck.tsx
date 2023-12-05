@@ -44,13 +44,13 @@ export default function DialogCheck({result}: Props) {
   // },[]);
   const onOpenChange = (value: boolean) => {
     setOpen(value);
-    if (!value && !localStorage.hasOwnProperty('isCheckDealerIsPop')) localStorage.setItem('isCheckDealerIsPop', 'true');
+    if (!value && !localStorage.hasOwnProperty('isCheckRewardisPop')) localStorage.setItem('isCheckRewardisPop', 'true');
   }
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      if (now.getMinutes() % 1 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer !== '0x0000000000000000000000000000000000000000'); 
+      if (now.getMinutes() % 4 === 0 && !localStorage.hasOwnProperty('isCheckRewardisPop')) setOpen(dealer !== '0x0000000000000000000000000000000000000000'); 
     }, 1000);
 
     return () => clearInterval(interval);

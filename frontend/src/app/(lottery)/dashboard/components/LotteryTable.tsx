@@ -9,13 +9,22 @@ import {
     TableRow,
     } from "@/components/ui/table"
 import useLottery from "../hooks/useLottery";
+import React from "react";
+import { useWeb3Store } from "@/state/web3Store";
     
 export function LotteryTable() {
-    const myLottery = useLottery();
+    const {myLottery,loading,fetchMylotteries} = useLottery();
+    const {address} = useWeb3Store();
+
+    React.useEffect(() => {
+        if (!address) return;
+        fetchMylotteries();
+    },[address,fetchMylotteries])
+
 
     return (
         <Table className="">
-        <TableCaption>A list of your Lottery.</TableCaption>
+        <TableCaption>{loading ? "Loading ...": (myLottery && myLottery.length === 0) ? "คุณยังไม่มีสลาก ;-;" : "A list of your Lottery."}</TableCaption>
         <TableHeader>
             <TableRow>
             <TableHead className="w-[100px]">เลข</TableHead>

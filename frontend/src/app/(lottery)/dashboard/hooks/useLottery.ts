@@ -5,8 +5,10 @@ import React, { useState } from "react";
 const useLottery = () => {
     const { myLotteries } = useLotteryContract();
     const [myLottery, setMyLottery] = useState<({id:number} & IBuyLottery)[]>();
+    const [loading,setLoading] = useState(false);
     
     const fetchMylotteries = React.useCallback(async () => {
+        setLoading(true);
         const data = await myLotteries();
         if (!data) return [];
         const myLottery = data.map((e: any[], i: number) => {
@@ -15,13 +17,14 @@ const useLottery = () => {
             return { id: i, baitNumber: e[0],playType , amount: Number(e[1]), baitValue: Number(e[2]), arrangeType }
         }) as ({id:number} & IBuyLottery)[];
         setMyLottery(myLottery);
+        setLoading(false);
     },[])
 
     React.useEffect(() => {
         fetchMylotteries();
     }, []);
 
-    return myLottery;
+    return {myLottery,loading,fetchMylotteries};
 }
 
 export default useLottery;

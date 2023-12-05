@@ -14,11 +14,12 @@ const useDealerReward = () => {
     },[lastDealerReward])
 
     React.useEffect(() => {
-        fetchDealerReward();
-        setLoading(false);
-    },[])
+        fetchDealerReward().then(() => {
+            setLoading(false);
+        });
+    },[fetchDealerReward])
 
-    return {reward,loading};
+    return {reward,loading,fetchDealerReward};
 
 }
 
