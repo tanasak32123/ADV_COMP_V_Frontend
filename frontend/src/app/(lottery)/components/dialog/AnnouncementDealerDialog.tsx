@@ -12,7 +12,9 @@ import {
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 import useDealer from "@/hooks/useDealer";
 import useLotteryContract from "@/hooks/useLotteryContract";
+import useStore from "@/hooks/useStore";
 import { toastError, toastSuccess } from "@/lib/toast";
+import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -41,6 +43,8 @@ export default function AnnouncementDealerDialog() {
 
   const [open, setOpen] = React.useState(false);
 
+  const { data: isAuthenticated } = useStore<TWeb3Store, boolean>(useWeb3Store, (state) => state.isAuthenticated);
+
   const onClickCheckDealerBtn = React.useCallback(async () => {
     try {
       await chooseDealer();
@@ -60,11 +64,11 @@ export default function AnnouncementDealerDialog() {
   React.useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      if (now.getMinutes() % 5 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer === '0x0000000000000000000000000000000000000000'); 
+      if (isAuthenticated && now.getMinutes() % 5 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer === '0x0000000000000000000000000000000000000000'); 
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [dealer, open])
+  }, [dealer, isAuthenticated, open])
 
   return (
     <>
