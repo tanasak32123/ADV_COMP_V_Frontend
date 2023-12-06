@@ -19,7 +19,7 @@ bun install
 ```
 4. create .env.local and add environment variable
 ```
-NEXT_PUBLIC_CONTRACT_ADDRESS=0xa37b36159E46F70EB6dbcd86bF064E98C969BF5f
+NEXT_PUBLIC_CONTRACT_ADDRESS=0xd0d3B7Eb9Cd83e6D028C5a789C4086AeD22e6810
 ```
 5. run in development
 ```

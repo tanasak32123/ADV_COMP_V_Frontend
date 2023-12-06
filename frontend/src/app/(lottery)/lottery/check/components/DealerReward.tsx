@@ -21,7 +21,7 @@ const Dealer = ({}: Props) => {
   const { addDealer } = useLotteryContract();
   const { reward, loading, fetchDealerReward } = useDealerReward();
   
-  const reward_eth = React.useMemo(() => ethers.formatEther(Number(reward)), [reward]);
+  const reward_eth = React.useMemo(() => ethers.formatEther(BigInt(reward)), [reward]);
   
   const [consent, setConsent] = React.useState(false);
   const [popupVisible, setPopupVisible] = React.useState(false);

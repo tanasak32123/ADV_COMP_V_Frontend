@@ -13,7 +13,7 @@ type Props = {
 export default function Result({date}: Props) {
     const { reward, loading, fetchReward } = useReward();
 
-    const num_reward = React.useMemo(() => Number(ethers.formatEther(Number(reward))), [reward]);
+    const num_reward = React.useMemo(() => Number(ethers.formatEther(BigInt(reward))), [reward]);
 
     const { address } = useWeb3Store();
 

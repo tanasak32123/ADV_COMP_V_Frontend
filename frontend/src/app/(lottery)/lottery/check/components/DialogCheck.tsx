@@ -23,7 +23,7 @@ type Props = {
 
 export default function DialogCheck({result}: Props) {
   const { checkLottery, loading } = useLotteryContract();
-  const { dealer, loading: dealerLoading } = useDealer();
+  const { dealer, loading: dealerLoading, fetchDealer } = useDealer();
   const [open, setOpen] = React.useState(false);
   const [isPopUp, setIsPopUp] = React.useState(false);
   const router = useRouter();
@@ -32,6 +32,7 @@ export default function DialogCheck({result}: Props) {
     try {
       await checkLottery(result);
       toastSuccess("Paying reward successfully.");
+      await fetchDealer();
       setOpen(false);
       return router.refresh();
     } catch (err:unknown){
@@ -39,7 +40,7 @@ export default function DialogCheck({result}: Props) {
       toastError("Something went wrong!");
       setOpen(false);
     }
-  }, [checkLottery, result, router]);
+  }, [checkLottery, fetchDealer, result, router]);
 
   const onOpenChange = React.useCallback((value: boolean) => {
     setOpen(value);
