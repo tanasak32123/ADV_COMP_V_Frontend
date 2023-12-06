@@ -70,7 +70,7 @@ export default function AnnouncementDealerDialog() {
     // }, 1000);
 
     // return () => clearInterval(interval);
-    if (isAuthenticated && !dealerLoading) setOpen(dealer === '0x0000000000000000000000000000000000000000' && !isPopUp);
+    if (isAuthenticated && !dealerLoading && dealer) setOpen(dealer === '0x0000000000000000000000000000000000000000' && !isPopUp);
   }, [dealer, dealerLoading, isAuthenticated, isPopUp])
 
   return (

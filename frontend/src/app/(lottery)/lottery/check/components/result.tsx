@@ -4,6 +4,7 @@ import React from 'react';
 import { IDate } from '@/interface/lottery/lottery.interface';
 import useReward from '../hooks/useReward';
 import { useWeb3Store } from '@/state/web3Store';
+import { ethers } from 'ethers';
 
 type Props = {
     date: IDate
@@ -12,7 +13,7 @@ type Props = {
 export default function Result({date}: Props) {
     const { reward, loading, fetchReward } = useReward();
 
-    const num_reward = React.useMemo(() => Number(reward), [reward]);
+    const num_reward = React.useMemo(() => Number(ethers.formatEther(Number(reward))), [reward]);
 
     const { address } = useWeb3Store();
 

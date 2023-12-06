@@ -20,7 +20,6 @@ const Dealer = ({}: Props) => {
 
   const { addDealer } = useLotteryContract();
   const { reward, loading, fetchDealerReward } = useDealerReward();
-  const { dealer, fetchDealer } = useDealer();
   
   const reward_eth = React.useMemo(() => ethers.formatEther(Number(reward)), [reward]);
   
@@ -37,7 +36,6 @@ const Dealer = ({}: Props) => {
     const {result, message} = await addDealer();
     if (result){
       toastSuccess("ลงทะเบียน Dealer สำเร็จ");
-      await fetchDealer();
     }else{
       if (message === "CALL_EXCEPTION"){
           toastError("จำนวน ETH ไม่เพียงพอ");
@@ -48,7 +46,7 @@ const Dealer = ({}: Props) => {
     setPopupVisible(false);
     setConsent(false);
     router.push('/dashboard');
-  }, [addDealer, fetchDealer, router])
+  }, [addDealer, router])
 
   const toggleConsent = React.useCallback(() => {
     setConsent((prev) => !prev);
@@ -56,11 +54,8 @@ const Dealer = ({}: Props) => {
 
   React.useEffect(() => {
     if (!address) return;
-    console.log(dealer);
-    if (dealer && dealer !== '0x0000000000000000000000000000000000000000') return;
-    console.log('fetch');
     fetchDealerReward();
-  }, [address, dealer, fetchDealerReward])
+  }, [address, fetchDealerReward])
 
   return (
     <>

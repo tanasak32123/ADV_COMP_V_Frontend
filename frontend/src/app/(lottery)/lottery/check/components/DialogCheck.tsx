@@ -10,13 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { IRewardLottery } from '@/interface/lottery/lottery.interface'
 import useLotteryContract from '@/hooks/useLotteryContract'
 import { toastError, toastSuccess } from '@/lib/toast'
 import WaitingTransactionDialog from '@/components/dialog/WaitingTransactionDialog';
 import useDealer from '@/hooks/useDealer';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   result: IRewardLottery
@@ -24,22 +23,23 @@ type Props = {
 
 export default function DialogCheck({result}: Props) {
   const { checkLottery, loading } = useLotteryContract();
-  const { dealer, fetchDealer, loading: dealerLoading } = useDealer();
+  const { dealer, loading: dealerLoading } = useDealer();
   const [open, setOpen] = React.useState(false);
   const [isPopUp, setIsPopUp] = React.useState(false);
+  const router = useRouter();
 
   const onClickCheckLottery = React.useCallback(async () => {
     try {
       await checkLottery(result);
       toastSuccess("Paying reward successfully.");
-      await fetchDealer();
       setOpen(false);
+      return router.refresh();
     } catch (err:unknown){
       console.log(err);
       toastError("Something went wrong!");
       setOpen(false);
     }
-  }, [checkLottery, fetchDealer, result]);
+  }, [checkLottery, result, router]);
 
   const onOpenChange = React.useCallback((value: boolean) => {
     setOpen(value);
@@ -54,7 +54,7 @@ export default function DialogCheck({result}: Props) {
     // }, 1000);
 
     // return () => clearInterval(interval);
-    if (!dealerLoading) setOpen(dealer !== '0x0000000000000000000000000000000000000000' && !isPopUp)
+    if (!dealerLoading && dealer) setOpen(dealer !== '0x0000000000000000000000000000000000000000' && !isPopUp)
   }, [dealer, isPopUp, open, dealerLoading])
 
   return (
