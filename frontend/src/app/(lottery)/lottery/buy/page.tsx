@@ -52,7 +52,7 @@ const BuyLotteryPage = () => {
       return [
         rest.baitNumber,
         rest.amount,
-        rest.baitValue,
+        BigInt(rest.baitValue),
         rest.digitType,
         rest.digitType === DIGIT_TYPE.TWO ? PLAY_TYPE.ALL : rest.playType,
         rest.arrangeType,

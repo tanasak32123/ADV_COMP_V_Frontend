@@ -1,6 +1,6 @@
 import ABI from "@/data/abi/Lottery.json";
 import React from "react";
-import { ethers, BrowserProvider, JsonRpcSigner } from "ethers";
+import { ethers, BrowserProvider, JsonRpcSigner, BigNumberish } from 'ethers';
 import { TWeb3Store, useWeb3Store } from "@/state/web3Store";
 import useStore from "./useStore";
 import { IRewardLottery } from "@/interface/lottery/lottery.interface";
@@ -37,7 +37,7 @@ const useLotteryContract = () => {
   const addDealer = React.useCallback(async () => {
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      const transaction = await contract.addDealer({ value: 5000000000000000 });
+      const transaction = await contract.addDealer({ value: BigInt(500000000000000000) });
       setLoading(true);
       await transaction.wait();
       return {result: true, message: "success"};
@@ -54,14 +54,16 @@ const useLotteryContract = () => {
 
   const buyLotteries = React.useCallback(async (data: any[][],  value: number) => {
     try {
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-      const transaction = await contract.buyLotteries(data, {value, gasLimit: 3000000});
+      const a: BigNumberish = BigInt(value);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer); 
+      const transaction = await contract.buyLotteries(data, {value: a, gasLimit: 3000000});
       setLoading(true);
       await transaction.wait();
     } catch (err: unknown) {
       const message =
         (err && typeof err === "object" && "message" in err && err.message) ||
         "Something went wrong!";
+      console.log(err);
       console.log(message);
       throw err;
     } finally {
