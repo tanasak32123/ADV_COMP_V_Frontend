@@ -11,12 +11,11 @@ const useDealerReward = () => {
         setLoading(true);
         const eth = await lastDealerReward();
         setReward(eth);
+        setLoading(false);
     },[lastDealerReward])
 
     React.useEffect(() => {
-        fetchDealerReward().then(() => {
-            setLoading(false);
-        });
+        fetchDealerReward();
     },[fetchDealerReward])
 
     return {reward,loading,fetchDealerReward};

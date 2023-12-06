@@ -35,13 +35,14 @@ import React from "react";
 export default function AnnouncementDealerDialog() {
   const { chooseDealer, loading } = useLotteryContract();
 
-  const { dealer } = useDealer();
+  const { dealer, loading: dealerLoading } = useDealer();
 
   const router = useRouter();
 
   // const { state: timer } = useCountdownTimer({ countdownDate: getNextDealerTimer() });
 
   const [open, setOpen] = React.useState(false);
+  const [isPopUp, setIsPopUp] = React.useState(false);
 
   const { data: isAuthenticated } = useStore<TWeb3Store, boolean>(useWeb3Store, (state) => state.isAuthenticated);
 
@@ -58,17 +59,19 @@ export default function AnnouncementDealerDialog() {
 
   const onOpenChange = (value: boolean) => {
     setOpen(value);
-    if (!value && !localStorage.hasOwnProperty('isCheckDealerIsPop')) localStorage.setItem('isCheckDealerIsPop', 'true');
+    setIsPopUp(true);
+    // if (!value && !localStorage.hasOwnProperty('isCheckDealerIsPop')) localStorage.setItem('isCheckDealerIsPop', 'true');
   }
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      if (isAuthenticated && now.getMinutes() % 5 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer === '0x0000000000000000000000000000000000000000'); 
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   const now = new Date();
+    //   if (isAuthenticated && now.getMinutes() % 5 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer === '0x0000000000000000000000000000000000000000'); 
+    // }, 1000);
 
-    return () => clearInterval(interval);
-  }, [dealer, isAuthenticated, open])
+    // return () => clearInterval(interval);
+    if (isAuthenticated && !dealerLoading) setOpen(dealer === '0x0000000000000000000000000000000000000000' && !isPopUp);
+  }, [dealer, dealerLoading, isAuthenticated, isPopUp])
 
   return (
     <>

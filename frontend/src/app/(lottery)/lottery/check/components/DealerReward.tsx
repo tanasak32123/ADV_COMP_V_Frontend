@@ -10,15 +10,23 @@ import { toastError, toastSuccess } from '@/lib/toast';
 import useLotteryContract from '@/hooks/useLotteryContract';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useWeb3Store } from '@/state/web3Store';
+import useDealer from '@/hooks/useDealer';
 
 type Props = {} 
 
 const Dealer = ({}: Props) => {
+  const { address }= useWeb3Store();
+
   const { addDealer } = useLotteryContract();
-  const {reward,loading,fetchDealerReward} = useDealerReward();
-  const reward_eth = ethers.formatEther(Number(reward));
-  const [consent,setConsent] = React.useState(false);
+  const { reward, loading, fetchDealerReward } = useDealerReward();
+  const { dealer, fetchDealer } = useDealer();
+  
+  const reward_eth = React.useMemo(() => ethers.formatEther(Number(reward)), [reward]);
+  
+  const [consent, setConsent] = React.useState(false);
   const [popupVisible, setPopupVisible] = React.useState(false);
+  
   const router = useRouter();
   
   const togglePopup = React.useCallback(() => {
@@ -29,6 +37,7 @@ const Dealer = ({}: Props) => {
     const {result, message} = await addDealer();
     if (result){
       toastSuccess("ลงทะเบียน Dealer สำเร็จ");
+      await fetchDealer();
     }else{
       if (message === "CALL_EXCEPTION"){
           toastError("จำนวน ETH ไม่เพียงพอ");
@@ -39,11 +48,19 @@ const Dealer = ({}: Props) => {
     setPopupVisible(false);
     setConsent(false);
     router.push('/dashboard');
-  }, [addDealer, router])
+  }, [addDealer, fetchDealer, router])
 
   const toggleConsent = React.useCallback(() => {
     setConsent((prev) => !prev);
   }, []);
+
+  React.useEffect(() => {
+    if (!address) return;
+    console.log(dealer);
+    if (dealer && dealer !== '0x0000000000000000000000000000000000000000') return;
+    console.log('fetch');
+    fetchDealerReward();
+  }, [address, dealer, fetchDealerReward])
 
   return (
     <>

@@ -24,34 +24,38 @@ type Props = {
 
 export default function DialogCheck({result}: Props) {
   const { checkLottery, loading } = useLotteryContract();
-  const { dealer } = useDealer();
+  const { dealer, fetchDealer, loading: dealerLoading } = useDealer();
   const [open, setOpen] = React.useState(false);
+  const [isPopUp, setIsPopUp] = React.useState(false);
 
   const onClickCheckLottery = React.useCallback(async () => {
     try {
       await checkLottery(result);
-      toastSuccess("Choose dealer successfully.");
+      toastSuccess("Paying reward successfully.");
+      await fetchDealer();
       setOpen(false);
     } catch (err:unknown){
       console.log(err);
       toastError("Something went wrong!");
       setOpen(false);
     }
-  }, [checkLottery, result]);
+  }, [checkLottery, fetchDealer, result]);
 
   const onOpenChange = React.useCallback((value: boolean) => {
     setOpen(value);
-    if (!value && !localStorage.hasOwnProperty('isCheckRewardisPop')) localStorage.setItem('isCheckRewardisPop', 'true');
+    setIsPopUp(true);
+    // if (!value && !localStorage.hasOwnProperty('isCheckRewardisPop')) localStorage.setItem('isCheckRewardisPop', 'true');
   }, []);
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      if (now.getMinutes() % 4 === 0 && !localStorage.hasOwnProperty('isCheckRewardisPop')) setOpen(dealer !== '0x0000000000000000000000000000000000000000'); 
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   const now = new Date();
+    //   if (now.getMinutes() % 4 === 0 && !localStorage.hasOwnProperty('isCheckRewardisPop')) setOpen(dealer !== '0x0000000000000000000000000000000000000000'); 
+    // }, 1000);
 
-    return () => clearInterval(interval);
-  }, [dealer, open])
+    // return () => clearInterval(interval);
+    if (!dealerLoading) setOpen(dealer !== '0x0000000000000000000000000000000000000000' && !isPopUp)
+  }, [dealer, isPopUp, open, dealerLoading])
 
   return (
     <>

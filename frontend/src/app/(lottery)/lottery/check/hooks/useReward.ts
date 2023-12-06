@@ -10,14 +10,14 @@ const useReward = () => {
         setLoading(true);
         const rewardLottery = await myReward();
         setReward(rewardLottery)
+        setLoading(false);
     },[myReward])
 
     React.useEffect(() => {
         fetchReward();
-        setLoading(false);
     },[fetchReward])
 
-    return {reward,loading};
+    return {reward,loading, fetchReward};
 
 }
 

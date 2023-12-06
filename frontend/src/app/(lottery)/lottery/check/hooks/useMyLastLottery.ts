@@ -9,7 +9,7 @@ const useLastLottery = () => {
     const {myLastLotteries} = useLotteryContract();
 
     const fetchMyLotteries = React.useCallback(async () => {
-        setLoading(false);
+        setLoading(true);
         const data = await myLastLotteries();
         if (!data) return [];
         const last_lottery = data.map((e: any[], i: number) => {
@@ -18,14 +18,14 @@ const useLastLottery = () => {
             return { id: i, baitNumber: e[0],playType , amount: Number(e[1]), baitValue: Number(e[2]), arrangeType }
         }) as ({id:number} & IBuyLottery)[];
         setMyLottery(last_lottery);
+        setLoading(false);
     },[myLastLotteries])
 
     React.useEffect(() => {
         fetchMyLotteries();
-        setLoading(true);
     },[fetchMyLotteries])
 
-    return {myLottery,loading};
+    return {myLottery, loading, fetchMyLotteries};
 
 }
 

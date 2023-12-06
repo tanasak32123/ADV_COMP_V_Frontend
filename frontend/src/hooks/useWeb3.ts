@@ -69,8 +69,8 @@ const useWeb3 = () => {
 
   const disconnectWallet = React.useCallback(() => {
     disconnect();
-    localStorage.removeItem("isCheckDealerIsPop");
-    localStorage.removeItem("isCheckRewardisPop");
+    // localStorage.removeItem("isCheckDealerIsPop");
+    // localStorage.removeItem("isCheckRewardisPop");
   }, [disconnect]);
 
   React.useEffect(() => {
@@ -88,8 +88,8 @@ const useWeb3 = () => {
         accounts.every((value) => typeof value === "string")
       )
         connectWallet();
-        localStorage.removeItem("isCheckDealerIsPop");
-        localStorage.removeItem("isCheckRewardisPop");
+        // localStorage.removeItem("isCheckDealerIsPop");
+        // localStorage.removeItem("isCheckRewardisPop");
     });
 
     window.ethereum.on("chainChanged", (network) => {
