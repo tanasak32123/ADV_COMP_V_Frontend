@@ -61,10 +61,20 @@ const Balance = ({user}: Props) => {
         setConsent(!consent);
     }
 
+    const clickConsent = () => {
+        setPopupVisible(false);
+        setConsent(false);
+    }
+
     React.useEffect(() => {
         if (!address) return;
         fetchBalance();
-    },[address,fetchBalance])
+    },[address,fetchBalance,iscandidate])
+
+    //open when change address
+    React.useEffect(()=>{
+        fetchimDealer();
+    },[address,fetchimDealer]);
 
     return (
         <>
@@ -78,7 +88,7 @@ const Balance = ({user}: Props) => {
                         <label htmlFor="term" className='pl-2 text-sm'>ฉันยอมรับเงื่อนไขที่กำหนด</label>
                     </div>
                     <div className='flex justify-between'>
-                        <div className='flex justify-center col-start-2 col-span-2 lg:col-start-4'><Button onClick={() => setPopupVisible(false)} variant={"ghost"}>ยกเลิก</Button></div>
+                        <div className='flex justify-center col-start-2 col-span-2 lg:col-start-4'><Button onClick={() => clickConsent()} variant={"ghost"}>ยกเลิก</Button></div>
                         <div className='flex justify-end col-start-6'>
                             <Button onClick={toggleApplyBtn} variant={"apply"} disabled={!consent}>Apply</Button>
                         </div>
