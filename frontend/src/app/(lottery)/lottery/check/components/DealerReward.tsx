@@ -68,7 +68,7 @@ const Dealer = ({}: Props) => {
                   <label htmlFor="term" className='pl-2 text-sm'>ฉันยอมรับเงื่อนไขที่กำหนด</label>
               </div>
               <div className='flex justify-between'>
-                  <div className='flex justify-center col-start-2 col-span-2 lg:col-start-4'><Button onClick={() => setPopupVisible(false)} variant={"ghost"}>ยกเลิก</Button></div>
+                  <div className='flex justify-center col-start-2 col-span-2 lg:col-start-4'><Button onClick={() => {setPopupVisible(false); setConsent(false);}} variant={"ghost"}>ยกเลิก</Button></div>
                   <div className='flex justify-end col-start-6'>
                       <Button onClick={applyTransaction} variant={"apply"} disabled={!consent}>Apply</Button>
                   </div>

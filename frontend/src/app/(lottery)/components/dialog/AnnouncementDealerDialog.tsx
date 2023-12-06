@@ -60,17 +60,17 @@ export default function AnnouncementDealerDialog() {
   const onOpenChange = (value: boolean) => {
     setOpen(value);
     setIsPopUp(true);
-    // if (!value && !localStorage.hasOwnProperty('isCheckDealerIsPop')) localStorage.setItem('isCheckDealerIsPop', 'true');
+    if (!value && !localStorage.hasOwnProperty('isCheckDealerIsPop')) localStorage.setItem('isCheckDealerIsPop', 'true');
   }
 
   React.useEffect(() => {
-    // const interval = setInterval(() => {
-    //   const now = new Date();
-    //   if (isAuthenticated && now.getMinutes() % 5 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer === '0x0000000000000000000000000000000000000000'); 
-    // }, 1000);
+    const interval = setInterval(() => {
+      const now = new Date();
+      if (isAuthenticated && now.getMinutes() % 5 === 0 && !localStorage.hasOwnProperty('isCheckDealerIsPop')) setOpen(dealer === '0x0000000000000000000000000000000000000000'); 
+    }, 1000);
 
-    // return () => clearInterval(interval);
-    if (isAuthenticated && !dealerLoading && dealer) setOpen(dealer === '0x0000000000000000000000000000000000000000' && !isPopUp);
+    return () => clearInterval(interval);
+    // if (isAuthenticated && !dealerLoading && dealer) setOpen(dealer === '0x0000000000000000000000000000000000000000' && !isPopUp);
   }, [dealer, dealerLoading, isAuthenticated, isPopUp])
 
   return (

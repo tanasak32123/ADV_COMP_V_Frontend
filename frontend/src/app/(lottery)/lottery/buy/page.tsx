@@ -72,11 +72,10 @@ const BuyLotteryPage = () => {
     <div className="grid content-between h-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 mb-6">
         <div>
-          <div className="font-bold text-lg">
-            ซื้อสลาก{" "}
-            <span className="text-orange-400">
-              (rate ในการได้เงินรางวัล = 1:4)
-            </span>
+          <div className="font-bold text-lg">ซื้อสลาก </div>
+          <div className="text-orange-400 text-sm">
+            (rate: ***ตรงกับรางวัลที่ 1 +.5 3ตัวโต๊ด = 1:3 , 3.5* 3เต๊ง = 1:2
+            ,2.5* 2ตัวโต๊ด = 1:2 , 2.5* 2ตัวเต๊ง = 1:1 , 1.5*)
           </div>
 
           <div className="bg-[#ECECEC] rounded-[30px] py-4 px-2 sm:px-4 mt-6">
