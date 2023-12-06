@@ -13,10 +13,12 @@ const useDealer = () => {
     const { data: address } = useStore<TWeb3Store, string>(useWeb3Store, (state) => state.address);
 
     const fetchDealer = React.useCallback(async () => {
+        setLoading(true);
         const dealerAddress = await getDealer();
         if (!dealerAddress || !address) return;
         setDealer(dealerAddress);
         setIsDealer(dealerAddress.toLocaleLowerCase() === address.toLocaleLowerCase());
+        setLoading(false);
     }, [address, getDealer]);
 
     React.useEffect(() => {
@@ -25,7 +27,7 @@ const useDealer = () => {
         });
     }, [fetchDealer]);
 
-    return { dealer, isDealer, loading }
+    return { dealer, isDealer, loading, fetchDealer }
 }
 
 export default useDealer;

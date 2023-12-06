@@ -7,11 +7,7 @@ import { MyLottery } from './components/MyLottery'
 import DealerReward from './components/DealerReward'
 import DialogCheck from './components/DialogCheck'
 
-type Props = {}
-
-
-export default async function CheckLotteryPage({}: Props) {
-
+export default async function CheckLotteryPage() {
   const response = await apiReward() as ResultResponse;
   const reward: IRewardLottery = {
     first: response.response.data.first.number[0].value,

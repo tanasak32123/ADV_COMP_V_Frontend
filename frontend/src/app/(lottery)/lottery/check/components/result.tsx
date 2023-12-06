@@ -3,14 +3,24 @@
 import React from 'react'; 
 import { IDate } from '@/interface/lottery/lottery.interface';
 import useReward from '../hooks/useReward';
+import { useWeb3Store } from '@/state/web3Store';
+import { ethers } from 'ethers';
 
 type Props = {
     date: IDate
 }
 
 export default function Result({date}: Props) {
-    const { reward, loading } = useReward();
-    const num_reward = Number(reward);
+    const { reward, loading, fetchReward } = useReward();
+
+    const num_reward = React.useMemo(() => Number(ethers.formatEther(Number(reward))), [reward]);
+
+    const { address } = useWeb3Store();
+
+    React.useEffect(() => {
+        if (!address) return;
+        fetchReward();
+    }, [address, fetchReward]);
     
     return (
     <>

@@ -1,4 +1,6 @@
 "use client";
+
+import React from 'react';
 import {
     Table,
     TableBody,
@@ -9,22 +11,33 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import useMyLastLottery from "../hooks/useMyLastLottery";
+import { useWeb3Store } from '@/state/web3Store';
 
 export function MyLottery() {
-    const { myLottery } = useMyLastLottery();
+    const { myLottery, fetchMyLotteries, loading } = useMyLastLottery();
+
+    const { address } = useWeb3Store();
+
+    React.useEffect(() => {
+        if (!address) return;
+        fetchMyLotteries();
+    }, [address, fetchMyLotteries]);
 
     return (
         <>
             <div className='p-5'>
                 <div className='py-3'>My Lottery List</div>
                 <div className="overflow-y-auto h-[450px]">
-                    <Table className="">
-                    {myLottery && myLottery.length === 0 && (
-                            <TableCaption>งวดที่แล้วไม่ได้ซื้อสลาก ;-; </TableCaption>
+                    <Table>
+                    {!loading && myLottery && myLottery.length === 0 && (
+                        <TableCaption>งวดที่แล้วไม่ได้ซื้อสลาก ;-; </TableCaption>
                     )}
-                    {myLottery && myLottery.length > 0 && (
-                            <TableCaption>A list of your Lottery.</TableCaption>
+                    {!loading && myLottery && myLottery.length > 0 && (
+                        <TableCaption>A list of your Lottery.</TableCaption>
                     )}
+                    {loading && 
+                        <TableCaption>Loading ...</TableCaption>
+                    }
                     <TableHeader className="sticky top-0">
                         <TableRow>
                         <TableHead className="w-[100px]">เลข</TableHead>
@@ -35,7 +48,7 @@ export function MyLottery() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        { myLottery && myLottery.length > 0 && (<>
+                        {!loading && myLottery && myLottery.length > 0 && (<>
                             {myLottery.map((lottery) => (
                             <TableRow key={lottery.id}>
                             <TableCell className="font-medium">{lottery.baitNumber}</TableCell>
